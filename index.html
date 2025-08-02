@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>متجر ELR الإلكتروني</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      direction: rtl;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    nav {
+      background-color: #555;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+    }
+    nav button {
+      background-color: #eee;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    section {
+      padding: 20px;
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+    }
+    img {
+      max-width: 150px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="mainTitle">متجر ELR الإلكتروني</h1>
+    <p id="greeting"></p>
+    <img src="logo.png" alt="شعار ELR">
+  </header>
+  <nav>
+    <button onclick="showSection('home')">الرئيسية</button>
+    <button onclick="showSection('about')">من نحن</button>
+    <button onclick="showSection('products')">المنتجات</button>
+    <button onclick="showSection('payment')">طرق الدفع</button>
+    <button onclick="showSection('contact')">تواصل معنا</button>
+    <button onclick="showSection('comments')">تعليقات العملاء</button>
+    <button onclick="toggleLanguage()" id="langBtn">🌐 English</button>
+  </nav>
+  <section id="home" class="active">
+    <p>مرحباً بكم في متجر ELR الإلكتروني</p>
+  </section>
+  <section id="about">
+    <div id="aboutSection">
+      متجر الكتروني متكامل للخدمات الالكترونية والرقمية<br>
+      بدقة و سرعة عالية في المعاملة
+    </div>
+  </section>
+  <section id="products">
+    <div id="productsSection">
+      <ul>
+        <li><strong>العملات الرقمية:</strong>
+          <ul>
+            <li>شراء العملات الرقمية</li>
+            <li>بيع العملات الرقمية</li>
+            <li>التعامل بعملة USDT في البيع والشراء</li>
+          </ul>
+        </li>
+        <li><strong>خدمات التلجرام:</strong>
+          <ul>
+            <li>توثيق التلجرام</li>
+            <li>شراء نجوم التلجرام</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section id="payment">
+    <div id="paymentSection">
+      <ul>
+        <li>💳 عن طريق الفيزا</li>
+        <li>🏦 عن طريق تطبيقات البنوك السودانية:
+          <ul>
+            <li>بنكك</li>
+            <li>أوكاش</li>
+            <li>فوري</li>
+            <li>ساهل</li>
+          </ul>
+        </li>
+      </ul>
+      <p><strong>ملاحظة:</strong><br>
+      سعر الشراء يختلف عن سعر البيع.<br>
+      يتم تحديث الأسعار بشكل دوري عند الطلب.</p>
+    </div>
+  </section>
+  <section id="contact">
+    <div id="contactSection">
+      <p>رابط التلجرام: <a href="https://t.me/ElnourMohammedAhmed">Telegram.me/ElnourMohammedAhmed</a></p>
+      <p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></p>
+      <p>الخط الساخن: +249111118226</p>
+    </div>
+  </section>
+  <section id="comments">
+    <form>
+      <label>اترك تعليقك:</label><br>
+      <textarea rows="4" cols="50"></textarea><br>
+      <button type="submit">إرسال</button>
+    </form>
+  </section>
+  <footer>
+    <p id="rights">جميع الحقوق محفوظة لمتجر ELR</p>
+  </footer>
+  <script>
+    // عرض الأقسام
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    // تحية الوقت
+    const hour = new Date().getHours();
+    document.getElementById('greeting').textContent =
+      hour < 12 ? 'صباح الخير!' : 'مساء الخير!';
+    // تبديل اللغة
+    let currentLang = 'ar';
+    const translations = {
+      ar: {
+        home: 'الرئيسية',
+        about: 'من نحن',
+        products: 'المنتجات',
+        payment: 'طرق الدفع',
+        contact: 'تواصل معنا',
+        comments: 'تعليقات العملاء',
+        rights: 'جميع الحقوق محفوظة لمتجر ELR',
+        title: 'متجر ELR الإلكتروني',
+        greeting_morning: 'صباح الخير!',
+        greeting_evening: 'مساء الخير!',
+        aboutContent: 'متجر الكتروني متكامل للخدمات الالكترونية والرقمية<br>بدقة و سرعة عالية في المعاملة',
+        productsContent: `<ul><li><strong>العملات الرقمية:</strong><ul><li>شراء العملات الرقمية</li><li>بيع العملات الرقمية</li><li>التعامل بعملة USDT في البيع والشراء</li></ul></li><li><strong>خدمات التلجرام:</strong><ul><li>توثيق التلجرام</li><li>شراء نجوم التلجرام</li></ul></li></ul>`,
+        contactContent: `<p>رابط التلجرام: <a href="https://t.me/ElnourMohammedAhmed">Telegram.me/ElnourMohammedAhmed</a></p><p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></p><p>الخط الساخن: +249111118226</p>`,
+        paymentContent: `<ul><li>💳 عن طريق الفيزا</li><li>🏦 عن طريق تطبيقات البنوك السودانية:<ul><li>بنكك</li><li>أوكاش</li><li>فوري</li><li>ساهل</li></ul></li></ul><p><strong>ملاحظة:</strong><br>سعر الشراء يختلف عن سعر البيع.<br>يتم تحديث الأسعار بشكل دوري عند الطلب.</p>`
+      },
+      en: {
+        home: 'Home',
+        about: 'About',
+        products: 'Products',
+        payment: 'Payment',
+        contact: 'Contact Us',
+        comments: 'Customer Comments',
+        rights: 'All rights reserved to ELR Store',
+        title: 'ELR Online Store',
+        greeting_morning: 'Good Morning!',
+        greeting_evening: 'Good Evening!',
+        aboutContent: 'A complete e-store for digital and electronic services<br>With high speed and accuracy in transactions',
+        productsContent: `<ul><li><strong>Digital Currencies:</strong><ul><li>Buy digital currencies</li><li>Sell digital currencies</li><li>USDT support for transactions</li></ul></li><li><strong>Telegram Services:</strong><ul><li>Telegram Verification</li><li>Buy Telegram Stars</li></ul></li></ul>`,
+        contactContent: `<p>Telegram: <a href="https://t.me/ElnourMohammedAhmed">Telegram.me/ElnourMohammedAhmed</a></p><p>Facebook: <a href="https://facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></p><p>Hotline: +249111118226</p>`,
+        paymentContent: `<ul><li>💳 Via Visa</li><li>🏦 Via Sudanese Bank Apps:<ul><li>Bankak</li><li>OCash</li><li>Fawry</li><li>Sahl</li></ul></li></ul><p><strong>Note:</strong><br>Buy price is different from sell price.<br>Prices are updated regularly upon request.</p>`
+      }
+    };
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      const t = translations[currentLang];
+      const buttons = document.querySelectorAll('nav button');
+      buttons[0].textContent = t.home;
+      buttons[1].textContent = t.about;
+      buttons[2].textContent = t.products;
+      buttons[3].textContent = t.payment;
+      buttons[4].textContent = t.contact;
+      buttons[5].textContent = t.comments;
+      buttons[6].textContent = currentLang === 'ar' ? '🌐 English' : '🌐 العربية';
+      document.getElementById('mainTitle').textContent = t.title;
+      document.getElementById('greeting').textContent = hour < 12 ? t.greeting_morning : t.greeting_evening;
+      document.getElementById('aboutSection').innerHTML = t.aboutContent;
+      document.getElementById('productsSection').innerHTML = t.productsContent;
+      document.getElementById('contactSection').innerHTML = t.contactContent;
+      document.getElementById('paymentSection').innerHTML = t.paymentContent;
+      document.getElementById('rights').textContent = t.rights;
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    }
+  </script>
+</body>
+</html>
