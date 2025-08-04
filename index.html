@@ -2,171 +2,124 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>متجر ELR الإلكتروني</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       font-family: Arial, sans-serif;
       direction: rtl;
-      text-align: right;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
     }
     
     nav {
+      background: #f0f0f0;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #f0f0f0;
-      padding: 10px 20px;
-      position: relative;
-      flex-wrap: wrap;
+    }
+    
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
     
     .nav-links {
       list-style: none;
       display: flex;
-      gap: 10px;
-      padding: 0;
       margin: 0;
+      padding: 0;
     }
     
     .nav-links li {
-      cursor: pointer;
       padding: 8px 15px;
-      border-radius: 5px;
-      user-select: none;
-    }
-    
-    .nav-links li.active {
-      background-color: #007bff;
-      color: white;
-      font-weight: bold;
+      cursor: pointer;
     }
     
     .section {
       display: none;
       padding: 20px;
-      min-height: 300px;
     }
     
     .section.active {
       display: block;
-      animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .menu-toggle {
-      display: none;
-      cursor: pointer;
-      font-size: 24px;
-      padding: 10px;
-      background: none;
-      border: none;
     }
     
     @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      
       .nav-links {
         display: none;
-        flex-direction: column;
-        width: 100%;
-        background: #f8f9fa;
         position: absolute;
-        top: 100%;
+        top: 60px;
         right: 0;
-        padding: 0;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        z-index: 1000;
+        background: #f8f9fa;
+        width: 100%;
+        flex-direction: column;
       }
       
       .nav-links.active {
         display: flex;
       }
-      
-      .nav-links li {
-        width: 100%;
-        text-align: right;
-        padding: 12px 20px;
-        border-bottom: 1px solid #e0e0e0;
-      }
-      
-      .menu-toggle {
-        display: block;
-      }
     }
-    
-    /* باقي الأنماط... */
   </style>
 </head>
 <body>
   <nav>
     <button class="menu-toggle">☰</button>
-    <ul class="nav-links">
+    <ul class="nav-links active">
       <li class="nav-item active" data-section="home">الرئيسية</li>
       <li class="nav-item" data-section="about">من نحن</li>
       <li class="nav-item" data-section="products">المنتجات</li>
-      <li class="nav-item" data-section="contact">تواصل معنا</li>
-      <li class="nav-item" data-section="comments">تعليقات العملاء</li>
-      <li class="nav-item" data-section="payment">طرق الدفع</li>
     </ul>
     <div>
-      <span id="greeting">صباح الخير</span>
       <button class="lang-switch" id="langBtn">EN</button>
     </div>
   </nav>
 
+  <!-- الأقسام -->
   <section id="home" class="section active">
-    <div>
-      <h1>مرحباً بكم في متجر ELR الإلكتروني</h1>
-      <p>نقدم لكم أفضل الخدمات الرقمية والتعاملات الإلكترونية</p>
-    </div>
+    <h1>مرحباً بكم في متجرنا</h1>
+    <p>هذا محتوى الصفحة الرئيسية</p>
   </section>
   
-  <!-- باقي الأقسام -->
+  <section id="about" class="section">
+    <h2>من نحن</h2>
+    <p>معلومات عن المتجر</p>
+  </section>
   
+  <section id="products" class="section">
+    <h2>منتجاتنا</h2>
+    <p>قائمة بالمنتجات</p>
+  </section>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // عرض القسم الرئيسي تلقائياً
-      document.getElementById('home').classList.add('active');
-      
-      // العناصر الأساسية
+      // عناصر DOM
       const menuToggle = document.querySelector('.menu-toggle');
       const navLinks = document.querySelector('.nav-links');
       const navItems = document.querySelectorAll('.nav-item');
       const sections = document.querySelectorAll('.section');
       
-      // تبديل القائمة المنسدلة
+      // تأكد من عرض القسم الرئيسي أولاً
+      showSection('home');
+      
+      // حدث القائمة المنسدلة
       menuToggle.addEventListener('click', function() {
         navLinks.classList.toggle('active');
       });
       
-      // تغيير القسم النشط
+      // أحداث عناصر القائمة
       navItems.forEach(item => {
         item.addEventListener('click', function() {
-          // إخفاء جميع الأقسام
-          sections.forEach(section => {
-            section.classList.remove('active');
-          });
-          
-          // إزالة التنشيط من جميع العناصر
-          navItems.forEach(i => {
-            i.classList.remove('active');
-          });
-          
-          // إظهار القسم المحدد
           const sectionId = this.getAttribute('data-section');
-          document.getElementById(sectionId).classList.add('active');
-          
-          // تنشيط عنصر القائمة
-          this.classList.add('active');
+          showSection(sectionId);
           
           // إغلاق القائمة المنسدلة على الهاتف
           if (window.innerWidth <= 768) {
@@ -174,6 +127,25 @@
           }
         });
       });
+      
+      // وظيفة عرض القسم
+      function showSection(sectionId) {
+        // إخفاء جميع الأقسام
+        sections.forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        // إزالة التنشيط من جميع العناصر
+        navItems.forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // إظهار القسم المحدد
+        document.getElementById(sectionId).classList.add('active');
+        
+        // تنشيط عنصر القائمة
+        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+      }
     });
   </script>
 </body>
