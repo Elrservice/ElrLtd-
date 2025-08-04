@@ -19,6 +19,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
 
     .logo {
@@ -53,10 +54,6 @@
       width: 25px;
       background-color: white;
       margin: 4px 0;
-    }
-
-    .menu {
-      display: flex;
     }
 
     @media (max-width: 768px) {
@@ -99,16 +96,16 @@
     <span></span>
   </div>
   <nav id="navbar">
-    <a href="#home" class="active">الرئيسية</a>
-    <a href="#about">من نحن</a>
-    <a href="#products">المنتجات</a>
-    <a href="#comments">التعليقات</a>
-    <a href="#contact">تواصل معنا</a>
-    <a href="#payment">طرق الدفع</a>
+    <a href="#home" class="active" onclick="showPage('home')">الرئيسية</a>
+    <a href="#about" onclick="showPage('about')">من نحن</a>
+    <a href="#products" onclick="showPage('products')">المنتجات</a>
+    <a href="#comments" onclick="showPage('comments')">التعليقات</a>
+    <a href="#contact" onclick="showPage('contact')">تواصل معنا</a>
+    <a href="#payment" onclick="showPage('payment')">طرق الدفع</a>
   </nav>
 </header>
 
-<main id="home">
+<main id="main-content">
   <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
   <p>هنا سيكون محتوى الصفحة الرئيسية...</p>
 </main>
@@ -117,6 +114,63 @@
   function toggleMenu() {
     const navbar = document.getElementById("navbar");
     navbar.classList.toggle("open");
+  }
+
+  function showPage(page) {
+    const main = document.getElementById("main-content");
+    let content = "";
+    switch(page) {
+      case "home":
+        content = `
+          <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
+          <p>هنا سيكون محتوى الصفحة الرئيسية...</p>
+        `;
+        break;
+      case "about":
+        content = `
+          <h1>من نحن</h1>
+          <p>ELR هو متجر يقدم منتجات رقمية وخدمات متنوعة...</p>
+        `;
+        break;
+      case "products":
+        content = `
+          <h1>المنتجات</h1>
+          <ul>
+            <li>عملات رقمية</li>
+            <li>بطاقات فيزا</li>
+            <li>خدمات التليجرام (توثيق، نجوم)</li>
+          </ul>
+        `;
+        break;
+      case "comments":
+        content = `
+          <h1>التعليقات</h1>
+          <p>هنا قسم التعليقات الخاصة بالعملاء...</p>
+        `;
+        break;
+      case "contact":
+        content = `
+          <h1>تواصل معنا</h1>
+          <p>راسلنا عبر Telegram أو Facebook أو اتصل بالخط الساخن.</p>
+        `;
+        break;
+      case "payment":
+        content = `
+          <h1>طرق الدفع</h1>
+          <p>يمكنك الدفع عبر تحويل بنكي أو العملات الرقمية.</p>
+        `;
+        break;
+      default:
+        content = `<h1>صفحة غير موجودة</h1>`;
+    }
+    main.innerHTML = content;
+
+    // اغلق القائمة عند الضغط
+    document.getElementById("navbar").classList.remove("open");
+
+    // تحديد التبويب النشط
+    document.querySelectorAll("nav a").forEach(link => link.classList.remove("active"));
+    document.querySelector(`nav a[href="#${page}"]`).classList.add("active");
   }
 </script>
 
