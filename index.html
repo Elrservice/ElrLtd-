@@ -1,152 +1,124 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>متجر ELR الإلكتروني</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ELR Store</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      direction: rtl;
       margin: 0;
       padding: 0;
+      direction: rtl;
     }
-    
-    nav {
-      background: #f0f0f0;
+
+    header {
+      background-color: #333;
+      color: white;
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
+
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+    }
+
+    nav a.active {
+      background-color: #555;
+      border-radius: 5px;
+    }
+
     .menu-toggle {
       display: none;
-      font-size: 24px;
-      background: none;
-      border: none;
+      flex-direction: column;
       cursor: pointer;
     }
-    
-    .nav-links {
-      list-style: none;
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    .menu {
       display: flex;
-      margin: 0;
-      padding: 0;
     }
-    
-    .nav-links li {
-      padding: 8px 15px;
-      cursor: pointer;
-    }
-    
-    .section {
-      display: none;
-      padding: 20px;
-    }
-    
-    .section.active {
-      display: block;
-    }
-    
+
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-      
-      .nav-links {
+      nav {
         display: none;
+        flex-direction: column;
+        background-color: #333;
         position: absolute;
         top: 60px;
         right: 0;
-        background: #f8f9fa;
         width: 100%;
-        flex-direction: column;
       }
-      
-      .nav-links.active {
+
+      nav a {
+        padding: 15px;
+        border-top: 1px solid #444;
+      }
+
+      .menu-toggle {
         display: flex;
       }
+
+      nav.open {
+        display: flex;
+      }
+    }
+
+    main {
+      padding: 20px;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <button class="menu-toggle">☰</button>
-    <ul class="nav-links active">
-      <li class="nav-item active" data-section="home">الرئيسية</li>
-      <li class="nav-item" data-section="about">من نحن</li>
-      <li class="nav-item" data-section="products">المنتجات</li>
-    </ul>
-    <div>
-      <button class="lang-switch" id="langBtn">EN</button>
-    </div>
+
+<header>
+  <div class="logo">ELR</div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav id="navbar">
+    <a href="#home" class="active">الرئيسية</a>
+    <a href="#about">من نحن</a>
+    <a href="#products">المنتجات</a>
+    <a href="#comments">التعليقات</a>
+    <a href="#contact">تواصل معنا</a>
+    <a href="#payment">طرق الدفع</a>
   </nav>
+</header>
 
-  <!-- الأقسام -->
-  <section id="home" class="section active">
-    <h1>مرحباً بكم في متجرنا</h1>
-    <p>هذا محتوى الصفحة الرئيسية</p>
-  </section>
-  
-  <section id="about" class="section">
-    <h2>من نحن</h2>
-    <p>معلومات عن المتجر</p>
-  </section>
-  
-  <section id="products" class="section">
-    <h2>منتجاتنا</h2>
-    <p>قائمة بالمنتجات</p>
-  </section>
+<main id="home">
+  <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
+  <p>هنا سيكون محتوى الصفحة الرئيسية...</p>
+</main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // عناصر DOM
-      const menuToggle = document.querySelector('.menu-toggle');
-      const navLinks = document.querySelector('.nav-links');
-      const navItems = document.querySelectorAll('.nav-item');
-      const sections = document.querySelectorAll('.section');
-      
-      // تأكد من عرض القسم الرئيسي أولاً
-      showSection('home');
-      
-      // حدث القائمة المنسدلة
-      menuToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-      });
-      
-      // أحداث عناصر القائمة
-      navItems.forEach(item => {
-        item.addEventListener('click', function() {
-          const sectionId = this.getAttribute('data-section');
-          showSection(sectionId);
-          
-          // إغلاق القائمة المنسدلة على الهاتف
-          if (window.innerWidth <= 768) {
-            navLinks.classList.remove('active');
-          }
-        });
-      });
-      
-      // وظيفة عرض القسم
-      function showSection(sectionId) {
-        // إخفاء جميع الأقسام
-        sections.forEach(section => {
-          section.classList.remove('active');
-        });
-        
-        // إزالة التنشيط من جميع العناصر
-        navItems.forEach(item => {
-          item.classList.remove('active');
-        });
-        
-        // إظهار القسم المحدد
-        document.getElementById(sectionId).classList.add('active');
-        
-        // تنشيط عنصر القائمة
-        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
-      }
-    });
-  </script>
+<script>
+  function toggleMenu() {
+    const navbar = document.getElementById("navbar");
+    navbar.classList.toggle("open");
+  }
+</script>
+
 </body>
 </html>
