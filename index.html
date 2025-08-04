@@ -6,6 +6,9 @@
   <title>متجر ELR الإلكتروني</title>
   <style>
     /* الأساسيات */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
       direction: rtl;
@@ -13,6 +16,7 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      transition: all 0.3s ease;
     }
     
     /* شريط التنقل */
@@ -26,7 +30,7 @@
       flex-wrap: wrap;
     }
     
-    /* روابط التنقل العادية */
+    /* روابط التنقل */
     .nav-links {
       list-style: none;
       display: flex;
@@ -44,6 +48,10 @@
       white-space: nowrap;
     }
     
+    .nav-links li:hover {
+      background-color: #e0e0e0;
+    }
+    
     .nav-links li.active {
       background-color: #007bff;
       color: white;
@@ -56,7 +64,9 @@
       cursor: pointer;
       font-size: 24px;
       padding: 10px;
-      order: -1; /* يجعله يظهر في البداية */
+      order: -1;
+      background: none;
+      border: none;
     }
     
     /* استعلامات الوسائط للهواتف */
@@ -89,73 +99,254 @@
       .menu-toggle {
         display: block;
       }
-      
-      /* تعديلات إضافية للهواتف */
-      .section {
-        padding: 15px;
-      }
-      
-      #home img {
-        height: 80px;
-      }
     }
     
-    /* باقي الأنماط... */
+    /* الأقسام */
     .section {
       display: none;
       padding: 20px;
       min-height: 300px;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     .section.active {
       display: block;
     }
     
-    /* ... باقي الأنماط كما هي */
+    /* زر اللغة */
+    .lang-switch {
+      cursor: pointer;
+      padding: 6px 12px;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+      background: white;
+      font-weight: bold;
+      user-select: none;
+      margin-right: 10px;
+    }
+    
+    /* الصفحة الرئيسية */
+    #home div {
+      text-align: center;
+      padding: 30px;
+    }
+    
+    #home img {
+      height: 100px;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+    
+    /* التذييل */
+    footer {
+      text-align: center;
+      padding: 15px 10px;
+      background: #f0f0f0;
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #333;
+    }
   </style>
 </head>
 <body>
-  <!-- البنية الأساسية كما هي -->
   <nav>
-    <div class="menu-toggle">☰</div>
-    <div>
-      <ul class="nav-links">
-        <li class="nav-item active" data-section="home">الرئيسية</li>
-        <li class="nav-item" data-section="about">من نحن</li>
-        <li class="nav-item" data-section="products">المنتجات</li>
-        <li class="nav-item" data-section="contact">تواصل معنا</li>
-        <li class="nav-item" data-section="comments">تعليقات العملاء</li>
-        <li class="nav-item" data-section="payment">طرق الدفع</li>
-      </ul>
-    </div>
+    <button class="menu-toggle">☰</button>
+    <ul class="nav-links">
+      <li class="nav-item active" data-section="home">الرئيسية</li>
+      <li class="nav-item" data-section="about">من نحن</li>
+      <li class="nav-item" data-section="products">المنتجات</li>
+      <li class="nav-item" data-section="contact">تواصل معنا</li>
+      <li class="nav-item" data-section="comments">تعليقات العملاء</li>
+      <li class="nav-item" data-section="payment">طرق الدفع</li>
+    </ul>
     <div>
       <span id="greeting">صباح الخير</span>
       <button class="lang-switch" id="langBtn">EN</button>
     </div>
   </nav>
   
-  <!-- باقي الأقسام كما هي -->
+  <!-- الأقسام -->
+  <section id="home" class="section active">
+    <div>
+      <img src="logo.png" alt="شعار المتجر" />
+      <h1 id="welcome">مرحباً بكم في متجر ELR الإلكتروني</h1>
+      <p>نقدم لكم أفضل الخدمات الرقمية والتعاملات الإلكترونية</p>
+    </div>
+  </section>
+  
+  <section id="about" class="section">
+    <p id="about_text">متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة</p>
+  </section>
+  
+  <section id="products" class="section">
+    <h2 id="digital_currency">العملات الرقمية</h2>
+    <ul>
+      <li id="buy">شراء العملات الرقمية</li>
+      <li id="sell">بيع العملات الرقمية</li>
+      <li id="usdt">التعامل بعملة USDT في البيع والشراء</li>
+    </ul>
+    <h2 id="telegram_services">خدمات التلجرام</h2>
+    <ul>
+      <li id="verify">توثيق التلجرام</li>
+      <li id="stars">شراء نجوم التلجرام</li>
+    </ul>
+  </section>
+  
+  <section id="contact" class="section">
+    <p>Telegram: <a href="https://telegram.me/ElnourMohammedAhmed">@ElnourMohammedAhmed</a></p>
+    <p>Facebook: <a href="https://facebook.me/ElnourMohammedAhmed">facebook.com/ElnourMohammedAhmed</a></p>
+    <p id="hotline">الخط الساخن: +249111118226</p>
+  </section>
+  
+  <section id="comments" class="section">
+    <h3 id="comments_header">تعليقات العملاء</h3>
+    <textarea id="commentInput" placeholder="اكتب تعليقك هنا" rows="4" style="width: 100%; max-width: 500px;"></textarea><br />
+    <button id="submitComment" style="margin-top: 10px; padding: 8px 15px;">إرسال</button>
+    <ul id="commentsList" style="margin-top: 20px; max-width: 500px; padding-inline-start: 20px;"></ul>
+  </section>
+  
+  <section id="payment" class="section">
+    <ul>
+      <li id="visa">عن طريق الفيزا</li>
+      <li id="sudan_apps">عن طريق تطبيقات البنوك السودانية (بنكك، أوكاش، فوري، ساهل)</li>
+      <li id="note">ملاحظة: سعر الشراء يختلف عن سعر البيع ويتم تحديث الأسعار بشكل دوري عند الطلب</li>
+    </ul>
+  </section>
+  
+  <footer>
+    <p id="footer-text">جميع الحقوق محفوظة لمتجر ELR</p>
+  </footer>
   
   <script>
-    // كود JavaScript المعدل
     document.addEventListener('DOMContentLoaded', function() {
+      // العناصر الأساسية
+      const sections = document.querySelectorAll('.section');
+      const navItems = document.querySelectorAll('.nav-item');
       const menuToggle = document.querySelector('.menu-toggle');
       const navLinks = document.querySelector('.nav-links');
+      const langBtn = document.getElementById('langBtn');
+      const greetingElement = document.getElementById('greeting');
+      
+      // حالة اللغة
+      let currentLang = 'ar';
+      
+      // الترجمات
+      const translations = {
+        ar: {
+          home: "الرئيسية",
+          about: "من نحن",
+          products: "المنتجات",
+          contact: "تواصل معنا",
+          comments: "تعليقات العملاء",
+          payment: "طرق الدفع",
+          welcome: "مرحباً بكم في متجر ELR الإلكتروني",
+          about_text: "متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة",
+          digital_currency: "العملات الرقمية",
+          buy: "شراء العملات الرقمية",
+          sell: "بيع العملات الرقمية",
+          usdt: "التعامل بعملة USDT في البيع والشراء",
+          telegram_services: "خدمات التلجرام",
+          verify: "توثيق التلجرام",
+          stars: "شراء نجوم التلجرام",
+          hotline: "الخط الساخن: +249111118226",
+          comments_header: "تعليقات العملاء",
+          submit: "إرسال",
+          visa: "عن طريق الفيزا",
+          sudan_apps: "عن طريق تطبيقات البنوك السودانية (بنكك، أوكاش، فوري، ساهل)",
+          note: "ملاحظة: سعر الشراء يختلف عن سعر البيع ويتم تحديث الأسعار بشكل دوري عند الطلب",
+          footer_rights: "جميع الحقوق محفوظة لمتجر ELR",
+          greeting_morning: "صباح الخير",
+          greeting_evening: "مساء الخير"
+        },
+        en: {
+          home: "Home",
+          about: "About",
+          products: "Products",
+          contact: "Contact",
+          comments: "Comments",
+          payment: "Payment Methods",
+          welcome: "Welcome to ELR Online Store",
+          about_text: "A complete online store for digital and electronic services with high precision and speed",
+          digital_currency: "Digital Currency",
+          buy: "Buy Digital Currency",
+          sell: "Sell Digital Currency",
+          usdt: "USDT trading in buying and selling",
+          telegram_services: "Telegram Services",
+          verify: "Telegram Verification",
+          stars: "Buy Telegram Stars",
+          hotline: "Hotline: +249111118226",
+          comments_header: "Customer Comments",
+          submit: "Submit",
+          visa: "Via Visa Card",
+          sudan_apps: "Via Sudanese bank apps (Bankak, Okash, Fawry, Sahel)",
+          note: "Note: Purchase price differs from sale price. Prices are updated upon request.",
+          footer_rights: "All rights reserved to ELR Store",
+          greeting_morning: "Good morning",
+          greeting_evening: "Good evening"
+        }
+      };
+      
+      // تحديث التحية حسب الوقت
+      function updateGreeting() {
+        const now = new Date();
+        const hour = now.getHours();
+        const greetingKey = hour < 12 ? "greeting_morning" : "greeting_evening";
+        greetingElement.textContent = translations[currentLang][greetingKey];
+      }
+      
+      // تبديل اللغة
+      function toggleLanguage() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        applyTranslations();
+        updateGreeting();
+        langBtn.textContent = currentLang === 'ar' ? 'EN' : 'AR';
+        
+        // تغيير اتجاه الصفحة
+        document.body.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.body.style.textAlign = currentLang === 'ar' ? 'right' : 'left';
+      }
+      
+      // تطبيق الترجمات
+      function applyTranslations() {
+        Object.keys(translations[currentLang]).forEach(key => {
+          const element = document.getElementById(key);
+          if (element) {
+            element.textContent = translations[currentLang][key];
+          }
+        });
+      }
       
       // تبديل القائمة المنسدلة
       menuToggle.addEventListener('click', function() {
         navLinks.classList.toggle('active');
-        
-        // إيقاف التمرير عند فتح القائمة
         document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
       });
       
-      // إغلاق القائمة عند اختيار عنصر (للهواتف)
-      document.querySelectorAll('.nav-item').forEach(item => {
+      // تغيير القسم النشط
+      navItems.forEach(item => {
         item.addEventListener('click', function() {
+          // إخفاء جميع الأقسام
+          sections.forEach(section => section.classList.remove('active'));
+          
+          // إزالة التنشيط من جميع عناصر القائمة
+          navItems.forEach(i => i.classList.remove('active'));
+          
+          // إظهار القسم المحدد
+          const sectionId = this.getAttribute('data-section');
+          document.getElementById(sectionId).classList.add('active');
+          
+          // تنشيط عنصر القائمة
+          this.classList.add('active');
+          
+          // إغلاق القائمة المنسدلة على الهاتف
           if (window.innerWidth <= 768) {
             navLinks.classList.remove('active');
-            document.body.style.overflow = ''; // إعادة التمرير
+            document.body.style.overflow = '';
           }
         });
       });
@@ -175,7 +366,44 @@
         e.stopPropagation();
       });
       
-      // باقي الكود كما هو...
+      // التعليقات
+      document.getElementById('submitComment').addEventListener('click', function() {
+        const commentInput = document.getElementById('commentInput');
+        const comment = commentInput.value.trim();
+        
+        if (comment) {
+          const li = document.createElement('li');
+          li.textContent = comment;
+          document.getElementById('commentsList').appendChild(li);
+          
+          // حفظ التعليق
+          let comments = JSON.parse(localStorage.getItem('elr-comments') || '[]');
+          comments.push(comment);
+          localStorage.setItem('elr-comments', JSON.stringify(comments));
+          
+          commentInput.value = '';
+        }
+      });
+      
+      // تحميل التعليقات المحفوظة
+      function loadComments() {
+        const comments = JSON.parse(localStorage.getItem('elr-comments') || '[]');
+        const commentsList = document.getElementById('commentsList');
+        
+        comments.forEach(comment => {
+          const li = document.createElement('li');
+          li.textContent = comment;
+          commentsList.appendChild(li);
+        });
+      }
+      
+      // تهيئة الأحداث
+      langBtn.addEventListener('click', toggleLanguage);
+      
+      // التهيئة الأولية
+      applyTranslations();
+      updateGreeting();
+      loadComments();
     });
   </script>
 </body>
