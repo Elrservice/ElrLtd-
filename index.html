@@ -1,186 +1,150 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ELR Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر ELR</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
       direction: rtl;
-    }
+    }header {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
 
-    header {
-      background-color: #333;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-    }
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
 
-    .logo {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
+.menu-toggle {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
 
-    nav {
-      display: flex;
-      gap: 10px;
-    }
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background-color: white;
+  margin: 4px 0;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-    }
+nav {
+  display: none;
+  flex-direction: column;
+  background-color: #444;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+}
 
-    nav a.active {
-      background-color: #555;
-      border-radius: 5px;
-    }
+nav a {
+  color: white;
+  padding: 15px;
+  text-decoration: none;
+  border-bottom: 1px solid #555;
+}
 
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
+nav a:hover,
+nav a.active {
+  background-color: #555;
+}
 
-    .menu-toggle span {
-      height: 3px;
-      width: 25px;
-      background-color: white;
-      margin: 4px 0;
-    }
+nav.open {
+  display: flex;
+}
 
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-        flex-direction: column;
-        background-color: #333;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 100%;
-        z-index: 1;
-      }
+main {
+  padding: 20px;
+}
 
-      nav.open {
-        display: flex;
-      }
+section {
+  display: none;
+}
 
-      nav a {
-        border-top: 1px solid #444;
-        padding: 15px;
-      }
+section.active {
+  display: block;
+}
 
-      .menu-toggle {
-        display: flex;
-      }
-    }
-
-    main > section {
-      display: none;
-      padding: 20px;
-    }
-
-    main > section.active {
-      display: block;
-    }
   </style>
 </head>
 <body>
+  <header>
+    <div class="logo">ELR</div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="navbar">
+      <a href="#home" onclick="showSection('home')" class="active">الرئيسية</a>
+      <a href="#about" onclick="showSection('about')">من نحن</a>
+      <a href="#products" onclick="showSection('products')">المنتجات</a>
+      <a href="#comments" onclick="showSection('comments')">التعليقات</a>
+      <a href="#contact" onclick="showSection('contact')">تواصل معنا</a>
+      <a href="#payment" onclick="showSection('payment')">طرق الدفع</a>
+    </nav>
+  </header>  <main>
+    <section id="home" class="active">
+      <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
+      <p>هنا محتوى الصفحة الرئيسية.</p>
+    </section><section id="about">
+  <h1>من نحن</h1>
+  <p>نحن نقدم خدمات العملات الرقمية وبطاقات الفيزا وخدمات التلجرام.</p>
+</section>
 
-<header>
-  <div class="logo">ELR</div>
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <nav id="navbar">
-    <a href="#home" class="active" onclick="showSection('home')">الرئيسية</a>
-    <a href="#about" onclick="showSection('about')">من نحن</a>
-    <a href="#products" onclick="showSection('products')">المنتجات</a>
-    <a href="#comments" onclick="showSection('comments')">التعليقات</a>
-    <a href="#contact" onclick="showSection('contact')">تواصل معنا</a>
-    <a href="#payment" onclick="showSection('payment')">طرق الدفع</a>
-  </nav>
-</header>
+<section id="products">
+  <h1>المنتجات</h1>
+  <ul>
+    <li>عملات رقمية</li>
+    <li>بطاقات فيزا</li>
+    <li>خدمات تلجرام: توثيق، نجوم، دعم</li>
+  </ul>
+</section>
 
-<main>
-  <section id="home" class="active">
-    <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
-    <p>محتوى الصفحة الرئيسية هنا...</p>
-  </section>
+<section id="comments">
+  <h1>تعليقات العملاء</h1>
+  <p>لم يتم إضافة تعليقات بعد.</p>
+</section>
 
-  <section id="about">
-    <h1>من نحن</h1>
-    <p>تعريف بالخدمات التي نقدمها...</p>
-  </section>
+<section id="contact">
+  <h1>تواصل معنا</h1>
+  <ul>
+    <li>Telegram</li>
+    <li>Facebook</li>
+    <li>الخط الساخن</li>
+  </ul>
+</section>
 
-  <section id="products">
-    <h1>المنتجات</h1>
-    <p>عرض للعملات الرقمية وخدمات التلجرام وبطاقات الفيزا...</p>
-  </section>
+<section id="payment">
+  <h1>طرق الدفع</h1>
+  <p>نقبل العملات الرقمية والتحويلات البنكية وبطاقات الدفع.</p>
+</section>
 
-  <section id="comments">
-    <h1>تعليقات العملاء</h1>
-    <p>هنا يمكن للزوار قراءة التعليقات...</p>
-  </section>
-
-  <section id="contact">
-    <h1>تواصل معنا</h1>
-    <p>روابط تلغرام وفيسبوك والخط الساخن...</p>
-  </section>
-
-  <section id="payment">
-    <h1>طرق الدفع</h1>
-    <p>عرض لطرق الدفع المختلفة المتاحة...</p>
-  </section>
-</main>
-
-<script>
-  function toggleMenu() {
-    document.getElementById("navbar").classList.toggle("open");
-  }
-
-  function showSection(id) {
-    const sections = document.querySelectorAll("main > section");
-    sections.forEach(section => {
-      section.classList.remove("active");
-    });
-
-    const navLinks = document.querySelectorAll("nav a");
-    navLinks.forEach(link => link.classList.remove("active"));
-
-    document.getElementById(id).classList.add("active");
-
-    const activeLink = document.querySelector(`nav a[href="#${id}"]`);
-    if (activeLink) activeLink.classList.add("active");
-
-    // إغلاق القائمة بعد الاختيار في الهاتف
-    const navbar = document.getElementById("navbar");
-    if (window.innerWidth <= 768) {
-      navbar.classList.remove("open");
+  </main>  <script>
+    function toggleMenu() {
+      document.getElementById("navbar").classList.toggle("open");
     }
-  }
 
-  // عرض القسم الصحيح عند فتح الرابط مباشرة
-  window.addEventListener('load', () => {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-      showSection(hash);
+    function showSection(id) {
+      const sections = document.querySelectorAll("main section");
+      const links = document.querySelectorAll("nav a");
+      sections.forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+
+      links.forEach(link => link.classList.remove("active"));
+      document.querySelector(`nav a[href='#${id}']`).classList.add("active");
+
+      document.getElementById("navbar").classList.remove("open"); // إغلاق القائمة بعد الاختيار
     }
-  });
-</script>
-
-</body>
+  </script></body>
 </html>
