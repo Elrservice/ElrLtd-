@@ -2,107 +2,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>متجر ELR</title>
+  <title>متجر ELR الإلكتروني</title>
   <style>
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
-      padding: 0;
-    }body {
-  font-family: Arial, sans-serif;
-  direction: rtl;
-  background-color: #f9f9f9;
-}
-
-header {
-  background-color: #222;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-size: 1.8em;
-  font-weight: bold;
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.menu-toggle span {
-  height: 3px;
-  width: 25px;
-  background: white;
-  margin: 4px 0;
-}
-
-nav {
-  display: flex;
-  gap: 15px;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-.language-toggle {
-  background-color: #555;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-main {
-  padding: 20px;
-  text-align: center;
-}
-
-footer {
-  background-color: #222;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin-top: 40px;
-}
-
-@media (max-width: 768px) {
-  nav {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background: #333;
-    width: 100%;
-  }
-
-  nav a {
-    padding: 15px;
-    border-top: 1px solid #444;
-  }
-
-  nav.open {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: flex;
-  }
-}
-
+      font-family: Arial, sans-serif;
+      direction: rtl;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      background-color: white;
+      height: 3px;
+      margin: 4px 0;
+      width: 25px;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+    }
+    nav a.active {
+      background-color: #555;
+      border-radius: 5px;
+    }
+    nav.open {
+      display: flex;
+      flex-direction: column;
+      background-color: #333;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 100%;
+    }
+    main section {
+      display: none;
+      padding: 20px;
+    }
+    main section.active {
+      display: block;
+    }
+    footer {
+      text-align: center;
+      background-color: #333;
+      color: white;
+      padding: 10px;
+    }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
   </style>
 </head>
 <body>
@@ -114,79 +88,58 @@ footer {
       <span></span>
     </div>
     <nav id="navbar">
-      <a href="#" onclick="showPage('home')">الرئيسية</a>
-      <a href="#" onclick="showPage('about')">من نحن</a>
-      <a href="#" onclick="showPage('products')">المنتجات</a>
-      <a href="#" onclick="showPage('comments')">التعليقات</a>
-      <a href="#" onclick="showPage('contact')">تواصل معنا</a>
-      <a href="#" onclick="showPage('payment')">طرق الدفع</a>
+      <a href="#home" onclick="navigate(event, 'home')" class="active">الرئيسية</a>
+      <a href="#about" onclick="navigate(event, 'about')">من نحن</a>
+      <a href="#products" onclick="navigate(event, 'products')">المنتجات</a>
+      <a href="#comments" onclick="navigate(event, 'comments')">التعليقات</a>
+      <a href="#contact" onclick="navigate(event, 'contact')">تواصل معنا</a>
+      <a href="#payment" onclick="navigate(event, 'payment')">طرق الدفع</a>
     </nav>
-    <button class="language-toggle" onclick="toggleLanguage()">English</button>
-  </header>  <main id="main-content">
-    <h1>مرحباً بكم في متجر ELR الإلكتروني</h1>
-    <p>هنا ستجد أفضل الخدمات والمنتجات الرقمية.</p>
+  </header>  <main>
+    <section id="home" class="active">
+      <h1>مرحباً بكم في متجر ELR الإلكتروني</h1>
+      <p>نقدم أفضل الخدمات الرقمية والعملات.</p>
+    </section>
+    <section id="about">
+      <h2>من نحن</h2>
+      <p>ELR هو متجر متخصص في تقديم خدمات العملات الرقمية وخدمات التليجرام والبطاقات الإلكترونية.</p>
+    </section>
+    <section id="products">
+      <h2>المنتجات</h2>
+      <ul>
+        <li>عملات رقمية</li>
+        <li>بطاقات فيزا</li>
+        <li>خدمات تليجرام (توثيق – نجوم)</li>
+      </ul>
+    </section>
+    <section id="comments">
+      <h2>التعليقات</h2>
+      <p>لا توجد تعليقات حتى الآن.</p>
+    </section>
+    <section id="contact">
+      <h2>تواصل معنا</h2>
+      <p>Telegram: @elrstore | Facebook: ELRStore | الخط الساخن: 123456</p>
+    </section>
+    <section id="payment">
+      <h2>طرق الدفع</h2>
+      <p>نقبل التحويلات البنكية، العملات الرقمية، وبطاقات الفيزا.</p>
+    </section>
   </main>  <footer>
-    <p>جميع الحقوق محفوظة &copy; 2025 ELR</p>
+    جميع الحقوق محفوظة &copy; ELR 2025
   </footer>  <script>
-    const content = {
-      ar: {
-        home: '<h1>مرحباً بكم في متجر ELR الإلكتروني</h1><p>هنا ستجد أفضل الخدمات والمنتجات الرقمية.</p>',
-        about: '<h1>من نحن</h1><p>نحن فريق متخصص في تقديم الخدمات الرقمية مثل العملات وخدمات التلجرام.</p>',
-        products: '<h1>المنتجات</h1><ul><li>عملات رقمية</li><li>بطاقات فيزا</li><li>خدمات التلجرام (توثيق، نجوم)</li></ul>',
-        comments: '<h1>التعليقات</h1><p>آراء العملاء تظهر هنا.</p>',
-        contact: '<h1>تواصل معنا</h1><p>Telegram | Facebook | الخط الساخن</p>',
-        payment: '<h1>طرق الدفع</h1><p>باي بال، تحويل بنكي، عملات رقمية</p>',
-        footer: 'جميع الحقوق محفوظة &copy; 2025 ELR',
-        langButton: 'English',
-        direction: 'rtl'
-      },
-      en: {
-        home: '<h1>Welcome to ELR Store</h1><p>Find the best digital services and products here.</p>',
-        about: '<h1>About Us</h1><p>We are a team specializing in digital services like crypto and Telegram services.</p>',
-        products: '<h1>Products</h1><ul><li>Cryptocurrencies</li><li>Visa Cards</li><li>Telegram Services (Verification, Stars)</li></ul>',
-        comments: '<h1>Customer Comments</h1><p>Customer feedback will be displayed here.</p>',
-        contact: '<h1>Contact Us</h1><p>Telegram | Facebook | Hotline</p>',
-        payment: '<h1>Payment Methods</h1><p>PayPal, Bank Transfer, Crypto</p>',
-        footer: 'All rights reserved &copy; 2025 ELR',
-        langButton: 'العربية',
-        direction: 'ltr'
-      }
-    };
-
-    let currentLang = 'ar';
-
-    function showPage(page) {
-      document.getElementById('main-content').innerHTML = content[currentLang][page];
-      closeMenu();
-    }
-
-    function toggleLanguage() {
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      document.documentElement.lang = currentLang;
-      document.documentElement.dir = content[currentLang].direction;
-      document.getElementById('main-content').innerHTML = content[currentLang].home;
-      document.querySelector('footer p').innerHTML = content[currentLang].footer;
-      document.querySelector('.language-toggle').innerText = content[currentLang].langButton;
-      updateNavLabels();
-      closeMenu();
-    }
-
-    function updateNavLabels() {
-      const labels = {
-        ar: ['الرئيسية', 'من نحن', 'المنتجات', 'التعليقات', 'تواصل معنا', 'طرق الدفع'],
-        en: ['Home', 'About', 'Products', 'Comments', 'Contact', 'Payment']
-      };
-      const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach((link, index) => {
-        link.innerText = labels[currentLang][index];
-      });
-    }
-
     function toggleMenu() {
-      document.getElementById('navbar').classList.toggle('open');
+      const nav = document.getElementById('navbar');
+      nav.classList.toggle('open');
     }
 
-    function closeMenu() {
+    function navigate(event, sectionId) {
+      event.preventDefault();
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      // أغلق القائمة على الهاتف
       document.getElementById('navbar').classList.remove('open');
     }
   </script></body>
