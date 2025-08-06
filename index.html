@@ -1,146 +1,252 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>متجر ELR الإلكتروني</title>
+  <title>ELR Store</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       direction: rtl;
+      background-color: #f9f9f9;
     }
+
     header {
-      background-color: #333;
+      background-color: #222;
       color: white;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      position: relative;
     }
+
     .logo {
       font-size: 1.5em;
       font-weight: bold;
     }
+
+    .language-switch {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
     .menu-toggle {
       display: none;
       flex-direction: column;
       cursor: pointer;
     }
+
     .menu-toggle span {
-      background-color: white;
       height: 3px;
-      margin: 4px 0;
       width: 25px;
+      background-color: white;
+      margin: 4px 0;
     }
+
     nav {
       display: flex;
       gap: 10px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
       padding: 8px 12px;
     }
+
     nav a.active {
       background-color: #555;
       border-radius: 5px;
     }
-    nav.open {
-      display: flex;
-      flex-direction: column;
-      background-color: #333;
-      position: absolute;
-      top: 60px;
-      right: 0;
-      width: 100%;
-    }
-    main section {
-      display: none;
-      padding: 20px;
-    }
-    main section.active {
-      display: block;
-    }
-    footer {
-      text-align: center;
-      background-color: #333;
-      color: white;
-      padding: 10px;
-    }
+
     @media (max-width: 768px) {
-      nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-      }
       .menu-toggle {
         display: flex;
       }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #222;
+        width: 100%;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        border-top: 1px solid #444;
+        padding: 15px;
+      }
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">ELR</div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <nav id="navbar">
-      <a href="#home" onclick="navigate(event, 'home')" class="active">الرئيسية</a>
-      <a href="#about" onclick="navigate(event, 'about')">من نحن</a>
-      <a href="#products" onclick="navigate(event, 'products')">المنتجات</a>
-      <a href="#comments" onclick="navigate(event, 'comments')">التعليقات</a>
-      <a href="#contact" onclick="navigate(event, 'contact')">تواصل معنا</a>
-      <a href="#payment" onclick="navigate(event, 'payment')">طرق الدفع</a>
-    </nav>
-  </header>  <main>
-    <section id="home" class="active">
-      <h1>مرحباً بكم في متجر ELR الإلكتروني</h1>
-      <p>نقدم أفضل الخدمات الرقمية والعملات.</p>
-    </section>
-    <section id="about">
-      <h2>من نحن</h2>
-      <p>ELR هو متجر متخصص في تقديم خدمات العملات الرقمية وخدمات التليجرام والبطاقات الإلكترونية.</p>
-    </section>
-    <section id="products">
-      <h2>المنتجات</h2>
-      <ul>
-        <li>عملات رقمية</li>
-        <li>بطاقات فيزا</li>
-        <li>خدمات تليجرام (توثيق – نجوم)</li>
-      </ul>
-    </section>
-    <section id="comments">
-      <h2>التعليقات</h2>
-      <p>لا توجد تعليقات حتى الآن.</p>
-    </section>
-    <section id="contact">
-      <h2>تواصل معنا</h2>
-      <p>Telegram: @elrstore | Facebook: ELRStore | الخط الساخن: 123456</p>
-    </section>
-    <section id="payment">
-      <h2>طرق الدفع</h2>
-      <p>نقبل التحويلات البنكية، العملات الرقمية، وبطاقات الفيزا.</p>
-    </section>
-  </main>  <footer>
-    جميع الحقوق محفوظة &copy; ELR 2025
-  </footer>  <script>
-    function toggleMenu() {
-      const nav = document.getElementById('navbar');
-      nav.classList.toggle('open');
-    }
 
-    function navigate(event, sectionId) {
-      event.preventDefault();
-      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
-      event.target.classList.add('active');
-      document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(sectionId).classList.add('active');
+<header>
+  <div class="logo">ELR</div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav id="navbar">
+    <a href="#" onclick="showSection('home', this)" class="active">الرئيسية</a>
+    <a href="#" onclick="showSection('about', this)">من نحن</a>
+    <a href="#" onclick="showSection('products', this)">المنتجات</a>
+    <a href="#" onclick="showSection('comments', this)">التعليقات</a>
+    <a href="#" onclick="showSection('contact', this)">تواصل معنا</a>
+    <a href="#" onclick="showSection('payment', this)">طرق الدفع</a>
+  </nav>
+  <button class="language-switch" onclick="toggleLanguage()">English</button>
+</header>
 
-      // أغلق القائمة على الهاتف
-      document.getElementById('navbar').classList.remove('open');
-    }
-  </script></body>
+<main>
+  <section id="home" class="section active">
+    <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
+    <p>نقدم خدمات العملات الرقمية، التلجرام، والبطاقات الإلكترونية.</p>
+  </section>
+
+  <section id="about" class="section">
+    <h1>من نحن</h1>
+    <p>نحن فريق ELR نقدم حلولاً رقمية متكاملة.</p>
+  </section>
+
+  <section id="products" class="section">
+    <h1>المنتجات</h1>
+    <ul>
+      <li>عملات رقمية</li>
+      <li>بطاقات فيزا</li>
+      <li>خدمات التلجرام (توثيق - نجوم)</li>
+    </ul>
+  </section>
+
+  <section id="comments" class="section">
+    <h1>تعليقات العملاء</h1>
+    <p>آراء العملاء ستعرض هنا.</p>
+  </section>
+
+  <section id="contact" class="section">
+    <h1>تواصل معنا</h1>
+    <p>تيليجرام - فيسبوك - خط ساخن</p>
+  </section>
+
+  <section id="payment" class="section">
+    <h1>طرق الدفع</h1>
+    <p>باي بال - تحويل بنكي - العملات الرقمية</p>
+  </section>
+</main>
+
+<footer>
+  جميع الحقوق محفوظة &copy; ELR
+</footer>
+
+<script>
+  function toggleMenu() {
+    const navbar = document.getElementById("navbar");
+    navbar.classList.toggle("open");
+  }
+
+  function showSection(id, link) {
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+    link.classList.add("active");
+
+    // Close menu on mobile after click
+    document.getElementById("navbar").classList.remove("open");
+  }
+
+  let isArabic = true;
+  function toggleLanguage() {
+    isArabic = !isArabic;
+    document.body.dir = isArabic ? "rtl" : "ltr";
+    document.querySelector("html").lang = isArabic ? "ar" : "en";
+
+    document.querySelector(".language-switch").textContent = isArabic ? "English" : "العربية";
+
+    // تحديث النصوص حسب اللغة
+    const texts = {
+      ar: {
+        home: "الرئيسية",
+        about: "من نحن",
+        products: "المنتجات",
+        comments: "التعليقات",
+        contact: "تواصل معنا",
+        payment: "طرق الدفع",
+        welcome: "مرحبا بكم في متجر ELR الإلكتروني",
+        aboutText: "نحن فريق ELR نقدم حلولاً رقمية متكاملة.",
+        productsText: ["عملات رقمية", "بطاقات فيزا", "خدمات التلجرام (توثيق - نجوم)"],
+        contactText: "تيليجرام - فيسبوك - خط ساخن",
+        paymentText: "باي بال - تحويل بنكي - العملات الرقمية",
+        commentsText: "آراء العملاء ستعرض هنا.",
+        rights: "جميع الحقوق محفوظة © ELR"
+      },
+      en: {
+        home: "Home",
+        about: "About",
+        products: "Products",
+        comments: "Comments",
+        contact: "Contact Us",
+        payment: "Payment",
+        welcome: "Welcome to ELR Electronic Store",
+        aboutText: "We are ELR team offering complete digital solutions.",
+        productsText: ["Crypto Currencies", "Visa Cards", "Telegram Services (Verified - Stars)"],
+        contactText: "Telegram - Facebook - Hotline",
+        paymentText: "PayPal - Bank Transfer - Crypto",
+        commentsText: "Customer feedback will appear here.",
+        rights: "All rights reserved © ELR"
+      }
+    };
+
+    const t = texts[isArabic ? "ar" : "en"];
+    const navLinks = document.querySelectorAll("nav a");
+    navLinks[0].textContent = t.home;
+    navLinks[1].textContent = t.about;
+    navLinks[2].textContent = t.products;
+    navLinks[3].textContent = t.comments;
+    navLinks[4].textContent = t.contact;
+    navLinks[5].textContent = t.payment;
+
+    document.getElementById("home").innerHTML = `<h1>${t.welcome}</h1><p>${t.productsText.join(", ")}</p>`;
+    document.getElementById("about").innerHTML = `<h1>${t.about}</h1><p>${t.aboutText}</p>`;
+    document.getElementById("products").innerHTML = `<h1>${t.products}</h1><ul>${t.productsText.map(i => `<li>${i}</li>`).join("")}</ul>`;
+    document.getElementById("comments").innerHTML = `<h1>${t.comments}</h1><p>${t.commentsText}</p>`;
+    document.getElementById("contact").innerHTML = `<h1>${t.contact}</h1><p>${t.contactText}</p>`;
+    document.getElementById("payment").innerHTML = `<h1>${t.payment}</h1><p>${t.paymentText}</p>`;
+
+    document.querySelector("footer").textContent = t.rights;
+  }
+</script>
+
+</body>
 </html>
