@@ -1,208 +1,174 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>متجر ELR الإلكتروني</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>متجر ELR الالكتروني</title>
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background-color: #fff;
-      color: #4b2e1e;
-    }
-    header, footer {
-      background-color: #4b2e1e;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-      background-color: #4b2e1e;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-    }
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-    }
-    .toggle-btn {
-      font-size: 1.5rem;
-      background: none;
-      border: none;
-      color: white;
-      display: none;
-    }
+    body { font-family: Arial; background: #fff; color: #000; margin: 0; }
+    header { background-color: #8B4513; color: #fff; padding: 15px; text-align: center; }
+    nav { background-color: #8B4513; overflow: hidden; }
+    nav a { float: right; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
+    nav a:hover { background-color: #555; }
+    .container { padding: 20px; }
+    section { display: none; }
+    section.active { display: block; }
+    footer { background-color: #8B4513; color: white; text-align: center; padding: 10px; }
+    .lang-btn { position: fixed; top: 10px; left: 10px; background: #f0f0f0; border: 1px solid #ccc; padding: 5px; cursor: pointer; }
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: #4b2e1e;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-      }
-      .nav-links.active {
-        display: flex;
-      }
-      .toggle-btn {
-        display: block;
-        order: -1;
-      }
-    }
-    section {
-      padding: 2rem;
-      text-align: center;
-    }
-    .lang-btn {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #4b2e1e;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .comment-box {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .comment-box input, .comment-box textarea {
-      width: 100%;
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-    }
-    .comment-box button {
-      padding: 0.5rem 1rem;
-      background-color: #4b2e1e;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .comments-list {
-      margin-top: 1rem;
-      background-color: #f7f7f7;
-      padding: 1rem;
-      border-radius: 5px;
-    }
-    .comments-list p {
-      border-bottom: 1px solid #ccc;
-      padding: 0.5rem 0;
+      nav a { float: none; display: block; text-align: left; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1 id="greeting"></h1>
-  </header>  <nav>
-    <button class="toggle-btn" onclick="toggleMenu()">☰</button>
-    <div class="nav-links" id="navLinks">
-      <a href="#home">الرئيسية</a>
-      <a href="#about">من نحن</a>
-      <a href="#products">المنتجات</a>
-      <a href="#contact">تواصل معنا</a>
-      <a href="#comments">تعليقات العملاء</a>
-    </div>
-  </nav>  <section id="home">
-    <h2>مرحباً بكم في متجر ELR الإلكتروني</h2>
-    <img src="logo.png" alt="شعار ELR" width="150">
-  </section>  <section id="about">
-    <h2>من نحن</h2>
-    <p>متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة.</p>
-  </section>  <section id="products">
-    <h2>المنتجات</h2>
-    <h3>1- العملات الرقمية</h3>
-    <ul>
+
+<header>
+  <h1 id="welcome">صباح الخير، مرحبا بكم في متجر ELR الالكتروني</h1>
+  <img src="logo.png" alt="شعار المتجر" style="max-width: 150px;">
+</header>
+
+<button class="lang-btn" onclick="toggleLanguage()">English</button>
+
+<nav>
+  <a href="#" onclick="showSection('contact')">تواصل معنا</a>
+  <a href="#" onclick="showSection('comments')">تعليقات العملاء</a>
+  <a href="#" onclick="showSection('products')">المنتجات</a>
+  <a href="#" onclick="showSection('about')">من نحن</a>
+  <a href="#" onclick="showSection('home')">الرئيسية</a>
+</nav>
+
+<div class="container">
+  <section id="home" class="active">
+    <h2 id="homeTitle">مرحبا بكم في متجر ELR الالكتروني</h2>
+    <p id="homeText">نقدم خدماتنا بسرعة ودقة عالية.</p>
+  </section>
+
+  <section id="about">
+    <h2 id="aboutTitle">من نحن</h2>
+    <p id="aboutText">متجر الكتروني متكامل للخدمات الالكترونية والرقمية بدقة وسرعة عالية في المعاملة.</p>
+  </section>
+
+  <section id="products">
+    <h2 id="productsTitle">المنتجات</h2>
+    <h3 id="prod1Title">1- العملات الرقمية</h3>
+    <ul id="prod1List">
       <li>شراء العملات الرقمية</li>
       <li>بيع العملات الرقمية</li>
-      <li>التعامل بعملة USDT في البيع والشراء</li>
+      <li>التعامل بالعملة الرقمية USDT</li>
     </ul>
-    <h3>2- خدمات التلجرام</h3>
-    <ul>
+    <h3 id="prod2Title">2- خدمات التلجرام</h3>
+    <ul id="prod2List">
       <li>توثيق التلجرام</li>
       <li>شراء نجوم التلجرام</li>
     </ul>
-  </section>  <section id="contact">
-    <h2>تواصل معنا</h2>
-    <p>رابط التلجرام: <a href="https://t.me/ElnourMohammedAhmed">Telegram.me/ElnourMohammedAhmed</a></p>
-    <p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></p>
-    <p>الخط الساخن: +249111118226</p>
-  </section>  <section id="comments">
-    <h2>تعليقات العملاء</h2>
-    <div class="comment-box">
-      <input type="text" id="name" placeholder="اسمك">
-      <textarea id="comment" placeholder="اكتب تعليقك هنا"></textarea>
-      <button onclick="submitComment()">إرسال التعليق</button>
-      <div class="comments-list" id="commentsList"></div>
-    </div>
-  </section>  <section>
-    <button class="lang-btn" onclick="toggleLanguage()">تبديل اللغة</button>
-  </section>  <footer>
-    <p>جميع الحقوق محفوظة © ELR Ltd Service 2025</p>
-  </footer>  <script>
-    function toggleMenu() {
-      const navLinks = document.getElementById('navLinks');
-      navLinks.classList.toggle('active');
-    }
+  </section>
 
-    function updateGreeting() {
-      const hour = new Date().getHours();
-      const greeting = hour < 12 ? 'صباح الخير' : 'مساء الخير';
-      document.getElementById('greeting').textContent = greeting;
-    }
+  <section id="contact">
+    <h2 id="contactTitle">تواصل معنا</h2>
+    <ul id="contactList">
+      <li>رابط التليجرام: <a href="https://t.me/ElnourMohammedAhmed">Telegram</a></li>
+      <li>رابط الفيسبوك: <a href="https://facebook.com/ElnourMohammedAhmed">Facebook</a></li>
+      <li>الخط الساخن: +249111118226</li>
+    </ul>
+  </section>
 
-    function toggleLanguage() {
-      const currentLang = document.documentElement.lang;
-      if (currentLang === 'ar') {
-        document.documentElement.lang = 'en';
-        document.querySelectorAll('a')[0].textContent = 'Home';
-        document.querySelectorAll('a')[1].textContent = 'About Us';
-        document.querySelectorAll('a')[2].textContent = 'Products';
-        document.querySelectorAll('a')[3].textContent = 'Contact';
-        document.querySelectorAll('a')[4].textContent = 'Comments';
-        document.querySelector('h2').textContent = 'Welcome to ELR E-Store';
-        document.querySelector('.lang-btn').textContent = 'Switch Language';
-      } else {
-        location.reload();
-      }
-    }
+  <section id="comments">
+    <h2 id="commentsTitle">تعليقات العملاء</h2>
+    <form id="commentForm">
+      <input type="text" id="commentInput" placeholder="اكتب تعليقك هنا" required>
+      <button type="submit" id="sendBtn">إرسال</button>
+    </form>
+    <ul id="commentList"></ul>
+  </section>
+</div>
 
-    function submitComment() {
-      const name = document.getElementById('name').value.trim();
-      const comment = document.getElementById('comment').value.trim();
-      if (name && comment) {
-        const commentsList = document.getElementById('commentsList');
-        const commentElement = document.createElement('p');
-        commentElement.textContent = `${name}: ${comment}`;
-        commentsList.appendChild(commentElement);
-        saveComment(name, comment);
-        document.getElementById('name').value = '';
-        document.getElementById('comment').value = '';
-      }
-    }
+<footer id="footerText">
+  جميع الحقوق محفوظة &copy; 2025 ELR
+</footer>
 
-    function saveComment(name, comment) {
-      let comments = JSON.parse(localStorage.getItem('elrComments') || '[]');
-      comments.push({ name, comment });
-      localStorage.setItem('elrComments', JSON.stringify(comments));
-    }
+<script>
+  function showSection(sectionId) {
+    document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(sectionId).classList.add("active");
+  }
 
-    function loadComments() {
-      const comments = JSON.parse(localStorage.getItem('elrComments') || '[]');
-      const commentsList = document.getElementById('commentsList');
-      comments.forEach(c => {
-        const p = document.createElement('p');
-        p.textContent = `${c.name}: ${c.comment}`;
-        commentsList.appendChild(p);
-      });
-    }
+  // تحية صباح / مساء
+  const hour = new Date().getHours();
+  const welcome = document.getElementById("welcome");
+  if (hour >= 18 || hour < 5) {
+    welcome.textContent = "مساء الخير، مرحبا بكم في متجر ELR الالكتروني";
+  }
 
-    updateGreeting();
-    loadComments();
-  </script></body>
+  // التعليقات
+  document.getElementById("commentForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const comment = document.getElementById("commentInput").value;
+    const li = document.createElement("li");
+    li.textContent = comment;
+    document.getElementById("commentList").appendChild(li);
+    document.getElementById("commentInput").value = "";
+  });
+
+  // الترجمة
+  let currentLang = "ar";
+  function toggleLanguage() {
+    if(currentLang === "ar") {
+      document.querySelector(".lang-btn").innerText = "عربي";
+      welcome.textContent = "Good day, Welcome to ELR Online Store";
+      document.getElementById("homeTitle").textContent = "Welcome to ELR Online Store";
+      document.getElementById("homeText").textContent = "We provide our services quickly and accurately.";
+      document.getElementById("aboutTitle").textContent = "About Us";
+      document.getElementById("aboutText").textContent = "An integrated online store for electronic and digital services with high accuracy.";
+      document.getElementById("productsTitle").textContent = "Products";
+      document.getElementById("prod1Title").textContent = "1- Digital Currencies";
+      document.getElementById("prod1List").innerHTML = `
+        <li>Buy Digital Currencies</li>
+        <li>Sell Digital Currencies</li>
+        <li>Deal with USDT</li>`;
+      document.getElementById("prod2Title").textContent = "2- Telegram Services";
+      document.getElementById("prod2List").innerHTML = `
+        <li>Telegram Verification</li>
+        <li>Buy Telegram Stars</li>`;
+      document.getElementById("contactTitle").textContent = "Contact Us";
+      document.getElementById("contactList").innerHTML = `
+        <li>Telegram link: <a href="https://t.me/ElnourMohammedAhmed">Telegram</a></li>
+        <li>Facebook link: <a href="https://facebook.com/ElnourMohammedAhmed">Facebook</a></li>
+        <li>Hotline: +249111118226</li>`;
+      document.getElementById("commentsTitle").textContent = "Customer Comments";
+      document.getElementById("commentInput").placeholder = "Write your comment here";
+      document.getElementById("sendBtn").textContent = "Send";
+      document.getElementById("footerText").textContent = "All rights reserved © 2025 ELR";
+      currentLang = "en";
+    } else {
+      document.querySelector(".lang-btn").innerText = "English";
+      welcome.textContent = hour >= 18 || hour < 5 ? "مساء الخير، مرحبا بكم في متجر ELR الالكتروني" : "صباح الخير، مرحبا بكم في متجر ELR الالكتروني";
+      document.getElementById("homeTitle").textContent = "مرحبا بكم في متجر ELR الالكتروني";
+      document.getElementById("homeText").textContent = "نقدم خدماتنا بسرعة ودقة عالية.";
+      document.getElementById("aboutTitle").textContent = "من نحن";
+      document.getElementById("aboutText").textContent = "متجر الكتروني متكامل للخدمات الالكترونية والرقمية بدقة وسرعة عالية في المعاملة.";
+      document.getElementById("productsTitle").textContent = "المنتجات";
+      document.getElementById("prod1Title").textContent = "1- العملات الرقمية";
+      document.getElementById("prod1List").innerHTML = `
+        <li>شراء العملات الرقمية</li>
+        <li>بيع العملات الرقمية</li>
+        <li>التعامل بالعملة الرقمية USDT</li>`;
+      document.getElementById("prod2Title").textContent = "2- خدمات التلجرام";
+      document.getElementById("prod2List").innerHTML = `
+        <li>توثيق التلجرام</li>
+        <li>شراء نجوم التلجرام</li>`;
+      document.getElementById("contactTitle").textContent = "تواصل معنا";
+      document.getElementById("contactList").innerHTML = `
+        <li>رابط التليجرام: <a href="https://t.me/ElnourMohammedAhmed">Telegram</a></li>
+        <li>رابط الفيسبوك: <a href="https://facebook.com/ElnourMohammedAhmed">Facebook</a></li>
+        <li>الخط الساخن: +249111118226</li>`;
+      document.getElementById("commentsTitle").textContent = "تعليقات العملاء";
+      document.getElementById("commentInput").placeholder = "اكتب تعليقك هنا";
+      document.getElementById("sendBtn").textContent = "إرسال";
+      document.getElementById("footerText").textContent = "جميع الحقوق محفوظة © 2025 ELR";
+      currentLang = "ar";
+    }
+  }
+</script>
+
+</body>
 </html>
