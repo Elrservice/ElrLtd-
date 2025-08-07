@@ -1,181 +1,166 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ELR Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر ELR الإلكتروني</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+    * {
+      box-sizing: border-box;
     }
-
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background-color: #f9f9f9;
+    }
     header {
-      background-color: #333;
+      background-color: #2c3e50;
       color: white;
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
-
     .logo {
-      font-size: 1.5em;
+      font-size: 1.8em;
       font-weight: bold;
     }
-
     .menu-toggle {
       display: none;
       flex-direction: column;
       cursor: pointer;
     }
-
     .menu-toggle span {
       height: 3px;
       width: 25px;
       background-color: white;
       margin: 4px 0;
     }
-
     nav {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
-
     nav a {
       color: white;
       text-decoration: none;
-      padding: 8px 12px;
+      padding: 10px;
+      transition: background-color 0.3s;
     }
-
-    nav a.active {
-      background-color: #555;
+    nav a:hover, nav a.active {
+      background-color: #34495e;
       border-radius: 5px;
     }
-
-    .lang-btn {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
     @media (max-width: 768px) {
       nav {
         display: none;
         flex-direction: column;
-        background-color: #333;
-        position: absolute;
-        top: 60px;
-        right: 0;
         width: 100%;
-        z-index: 999;
       }
-
       nav.open {
         display: flex;
       }
-
       .menu-toggle {
         display: flex;
       }
     }
-
     main {
       padding: 20px;
-      direction: rtl;
     }
-
     footer {
-      background-color: #333;
+      background-color: #2c3e50;
       color: white;
       text-align: center;
-      padding: 10px;
+      padding: 15px;
       margin-top: 20px;
+    }
+    .lang-switch {
+      background: #f1c40f;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="logo">ELR</div>
+    <button class="lang-switch" onclick="switchLanguage()">English</button>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="navbar">
+      <a href="#home" class="active">الرئيسية</a>
+      <a href="#about">من نحن</a>
+      <a href="#products">المنتجات</a>
+      <a href="#comments">تعليقات العملاء</a>
+      <a href="#contact">تواصل معنا</a>
+      <a href="#payment">طرق الدفع</a>
+    </nav>
+  </header>  <main id="content">
+    <section id="home">
+      <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
+      <p>مرحبًا بكم في متجرنا، حيث نقدم أفضل الخدمات والمنتجات الرقمية.</p>
+    </section><section id="about" style="display:none;">
+  <h1>من نحن</h1>
+  <p>نحن شركة ELR، متخصصون في تقديم خدمات العملات الرقمية وبطاقات الفيزا وخدمات التلجرام.</p>
+</section>
 
-<header>
-  <div class="logo">ELR</div>
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-  <nav id="navbar">
-    <a href="#home" class="active" data-key="home">الرئيسية</a>
-    <a href="#about" data-key="about">من نحن</a>
-    <a href="#products" data-key="products">المنتجات</a>
-    <a href="#comments" data-key="comments">التعليقات</a>
-    <a href="#contact" data-key="contact">تواصل معنا</a>
-    <a href="#payment" data-key="payment">طرق الدفع</a>
-  </nav>
-  <button class="lang-btn" onclick="toggleLanguage()">EN</button>
-</header>
+<section id="products" style="display:none;">
+  <h1>المنتجات</h1>
+  <ul>
+    <li>بيع العملات الرقمية</li>
+    <li>بطاقات فيزا افتراضية</li>
+    <li>خدمات تلغرام: توثيق - نجوم - دعم</li>
+  </ul>
+</section>
 
-<main id="main-content">
-  <section id="home">
-    <h1 id="main-title">مرحبا بكم في متجر ELR الإلكتروني</h1>
-    <p id="main-desc">هنا سيكون محتوى الصفحة الرئيسية...</p>
-  </section>
-</main>
+<section id="comments" style="display:none;">
+  <h1>تعليقات العملاء</h1>
+  <p>نعتز بثقة عملائنا الكرام ونرحب بتعليقاتهم دائمًا.</p>
+</section>
 
-<footer>
-  <p id="footer-text">جميع الحقوق محفوظة &copy; 2025</p>
-</footer>
+<section id="contact" style="display:none;">
+  <h1>تواصل معنا</h1>
+  <p>تواصل عبر Telegram أو Facebook أو الخط الساخن.</p>
+</section>
 
-<script>
-  function toggleMenu() {
-    document.getElementById("navbar").classList.toggle("open");
-  }
+<section id="payment" style="display:none;">
+  <h1>طرق الدفع</h1>
+  <p>نوفر عدة طرق دفع آمنة وسريعة تشمل العملات الرقمية والتحويلات البنكية.</p>
+</section>
 
-  let currentLang = "ar";
+  </main>  <footer>
+    جميع الحقوق محفوظة &copy; ELR 2025
+  </footer>  <script>
+    const sections = document.querySelectorAll('main section');
+    const links = document.querySelectorAll('nav a');
 
-  const content = {
-    ar: {
-      home: "الرئيسية",
-      about: "من نحن",
-      products: "المنتجات",
-      comments: "التعليقات",
-      contact: "تواصل معنا",
-      payment: "طرق الدفع",
-      mainTitle: "مرحبا بكم في متجر ELR الإلكتروني",
-      mainDesc: "هنا سيكون محتوى الصفحة الرئيسية...",
-      footer: "جميع الحقوق محفوظة © 2025"
-    },
-    en: {
-      home: "Home",
-      about: "About Us",
-      products: "Products",
-      comments: "Comments",
-      contact: "Contact Us",
-      payment: "Payment Methods",
-      mainTitle: "Welcome to ELR Online Store",
-      mainDesc: "This is the home page content...",
-      footer: "All rights reserved © 2025"
-    }
-  };
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('href').substring(1);
 
-  function toggleLanguage() {
-    currentLang = currentLang === "ar" ? "en" : "ar";
-    document.documentElement.lang = currentLang;
-    document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
-    document.querySelector(".lang-btn").textContent = currentLang === "ar" ? "EN" : "AR";
+        sections.forEach(sec => {
+          sec.style.display = sec.id === target ? 'block' : 'none';
+        });
 
-    const labels = document.querySelectorAll("nav a");
-    labels.forEach(link => {
-      const key = link.getAttribute("data-key");
-      link.textContent = content[currentLang][key];
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
     });
 
-    document.getElementById("main-title").textContent = content[currentLang].mainTitle;
-    document.getElementById("main-desc").textContent = content[currentLang].mainDesc;
-    document.getElementById("footer-text").textContent = content[currentLang].footer;
-  }
-</script>
+    function toggleMenu() {
+      document.getElementById('navbar').classList.toggle('open');
+    }
 
-</body>
+    function switchLanguage() {
+      alert("ميزة تبديل اللغة قيد التطوير");
+    }
+  </script></body>
 </html>
