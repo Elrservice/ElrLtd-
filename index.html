@@ -1,29 +1,32 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>متجر ELR الإلكتروني</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>متجر ELR</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
       direction: rtl;
-      background-color: #f9f9f9;
     }
     header {
-      background-color: #2c3e50;
+      background-color: #006699;
       color: white;
-      padding: 10px 20px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     .logo {
-      font-size: 1.8em;
+      font-size: 1.5em;
       font-weight: bold;
     }
     .menu-toggle {
@@ -40,55 +43,63 @@
     nav {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
     }
     nav a {
       color: white;
       text-decoration: none;
-      padding: 10px;
-      transition: background-color 0.3s;
+      padding: 8px 12px;
+      transition: background 0.3s;
     }
     nav a:hover, nav a.active {
-      background-color: #34495e;
+      background-color: #004d66;
       border-radius: 5px;
     }
     @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
       nav {
-        display: none;
-        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #006699;
         width: 100%;
+        flex-direction: column;
+        display: none;
       }
       nav.open {
         display: flex;
       }
-      .menu-toggle {
-        display: flex;
+      nav a {
+        padding: 15px;
+        border-top: 1px solid #005580;
       }
     }
     main {
       padding: 20px;
     }
     footer {
-      background-color: #2c3e50;
+      background-color: #006699;
       color: white;
       text-align: center;
-      padding: 15px;
-      margin-top: 20px;
+      padding: 10px;
+      margin-top: 40px;
     }
-    .lang-switch {
-      background: #f1c40f;
-      border: none;
+    .lang-toggle {
+      background-color: #fff;
+      color: #006699;
       padding: 5px 10px;
-      border-radius: 5px;
+      border: none;
       cursor: pointer;
-      margin-right: 10px;
+      border-radius: 5px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">ELR</div>
-    <button class="lang-switch" onclick="switchLanguage()">English</button>
+    <button class="lang-toggle" onclick="toggleLanguage()">English</button>
     <div class="menu-toggle" onclick="toggleMenu()">
       <span></span>
       <span></span>
@@ -98,69 +109,106 @@
       <a href="#home" class="active">الرئيسية</a>
       <a href="#about">من نحن</a>
       <a href="#products">المنتجات</a>
-      <a href="#comments">تعليقات العملاء</a>
+      <a href="#comments">التعليقات</a>
       <a href="#contact">تواصل معنا</a>
       <a href="#payment">طرق الدفع</a>
     </nav>
-  </header>  <main id="content">
+  </header>  <main>
     <section id="home">
       <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
-      <p>مرحبًا بكم في متجرنا، حيث نقدم أفضل الخدمات والمنتجات الرقمية.</p>
-    </section><section id="about" style="display:none;">
-  <h1>من نحن</h1>
-  <p>نحن شركة ELR، متخصصون في تقديم خدمات العملات الرقمية وبطاقات الفيزا وخدمات التلجرام.</p>
+      <p>هنا المحتوى الكامل للصفحة الرئيسية...</p>
+    </section><section id="about">
+  <h2>من نحن</h2>
+  <p>نحن متجر ELR الإلكتروني المتخصص في تقديم خدمات العملات الرقمية، بطاقات الفيزا، وخدمات التليجرام.</p>
 </section>
 
-<section id="products" style="display:none;">
-  <h1>المنتجات</h1>
+<section id="products">
+  <h2>المنتجات</h2>
   <ul>
-    <li>بيع العملات الرقمية</li>
-    <li>بطاقات فيزا افتراضية</li>
-    <li>خدمات تلغرام: توثيق - نجوم - دعم</li>
+    <li>بيع وشراء العملات الرقمية</li>
+    <li>بطاقات فيزا مسبقة الدفع</li>
+    <li>خدمات التليجرام: توثيق، نجوم، دعم القنوات</li>
   </ul>
 </section>
 
-<section id="comments" style="display:none;">
-  <h1>تعليقات العملاء</h1>
-  <p>نعتز بثقة عملائنا الكرام ونرحب بتعليقاتهم دائمًا.</p>
+<section id="comments">
+  <h2>التعليقات</h2>
+  <form onsubmit="addComment(event)">
+    <input type="text" id="commentInput" placeholder="أدخل تعليقك" required />
+    <button type="submit">إرسال</button>
+  </form>
+  <div id="commentList"></div>
 </section>
 
-<section id="contact" style="display:none;">
-  <h1>تواصل معنا</h1>
-  <p>تواصل عبر Telegram أو Facebook أو الخط الساخن.</p>
+<section id="contact">
+  <h2>تواصل معنا</h2>
+  <p>تيليجرام: <a href="https://t.me/elrservice" target="_blank">@elrservice</a></p>
+  <p>فيسبوك: <a href="https://facebook.com/elrservice" target="_blank">صفحة الفيسبوك</a></p>
+  <p>الخط الساخن: 0912345678</p>
 </section>
 
-<section id="payment" style="display:none;">
-  <h1>طرق الدفع</h1>
-  <p>نوفر عدة طرق دفع آمنة وسريعة تشمل العملات الرقمية والتحويلات البنكية.</p>
+<section id="payment">
+  <h2>طرق الدفع</h2>
+  <ul>
+    <li>التحويل البنكي المحلي</li>
+    <li>محافظ رقمية مثل Binance وUSDT</li>
+    <li>خدمات تحويل محلية</li>
+  </ul>
 </section>
 
   </main>  <footer>
-    جميع الحقوق محفوظة &copy; ELR 2025
+    جميع الحقوق محفوظة &copy; 2025 - ELR
   </footer>  <script>
-    const sections = document.querySelectorAll('main section');
-    const links = document.querySelectorAll('nav a');
-
-    links.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = link.getAttribute('href').substring(1);
-
-        sections.forEach(sec => {
-          sec.style.display = sec.id === target ? 'block' : 'none';
-        });
-
-        links.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
-
     function toggleMenu() {
-      document.getElementById('navbar').classList.toggle('open');
+      document.getElementById("navbar").classList.toggle("open");
     }
 
-    function switchLanguage() {
-      alert("ميزة تبديل اللغة قيد التطوير");
+    function addComment(event) {
+      event.preventDefault();
+      const input = document.getElementById("commentInput");
+      const comment = input.value;
+      const commentList = document.getElementById("commentList");
+      const p = document.createElement("p");
+      p.textContent = comment;
+      commentList.appendChild(p);
+      input.value = "";
+    }
+
+    let currentLang = "ar";
+    function toggleLanguage() {
+      const langBtn = document.querySelector(".lang-toggle");
+      const translations = {
+        ar: {
+          home: "مرحبا بكم في متجر ELR الإلكتروني",
+          about: "نحن متجر ELR الإلكتروني المتخصص في تقديم خدمات العملات الرقمية، بطاقات الفيزا، وخدمات التليجرام.",
+          products: ["بيع وشراء العملات الرقمية", "بطاقات فيزا مسبقة الدفع", "خدمات التليجرام: توثيق، نجوم، دعم القنوات"],
+          contact: ["تيليجرام: @elrservice", "فيسبوك: صفحة الفيسبوك", "الخط الساخن: 0912345678"],
+          payment: ["التحويل البنكي المحلي", "محافظ رقمية مثل Binance وUSDT", "خدمات تحويل محلية"]
+        },
+        en: {
+          home: "Welcome to ELR Online Store",
+          about: "We are ELR, offering digital currency services, prepaid Visa cards, and Telegram support.",
+          products: ["Buy and sell digital currencies", "Prepaid Visa cards", "Telegram services: Verification, Stars, Channel support"],
+          contact: ["Telegram: @elrservice", "Facebook: Page", "Hotline: 0912345678"],
+          payment: ["Local bank transfer", "Digital wallets like Binance and USDT", "Local transfer services"]
+        }
+      };
+      currentLang = currentLang === "ar" ? "en" : "ar";
+      langBtn.textContent = currentLang === "ar" ? "English" : "العربية";
+      document.querySelector("#home h1").textContent = translations[currentLang].home;
+      document.querySelector("#about p").textContent = translations[currentLang].about;
+      const productItems = document.querySelectorAll("#products ul li");
+      productItems.forEach((li, index) => {
+        li.textContent = translations[currentLang].products[index];
+      });
+      const contactPs = document.querySelectorAll("#contact p");
+      contactPs.forEach((p, index) => {
+        p.textContent = translations[currentLang].contact[index];
+      });
+      const paymentLis = document.querySelectorAll("#payment ul li");
+      paymentLis.forEach((li, index) => {
+        li.textContent = translations[currentLang].payment[index];
+      });
     }
   </script></body>
 </html>
