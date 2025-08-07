@@ -1,165 +1,188 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>متجر ELR الإلكتروني</title>
+  <title>متجر ELR الالكتروني</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
       background-color: #fff;
-      color: #4b3832;
-      direction: rtl;
+      color: #4e342e;
     }
     header, footer {
-      background-color: #4b3832;
+      background-color: #4e342e;
       color: white;
       text-align: center;
-      padding: 1em;
+      padding: 10px;
     }
     nav {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      background-color: #d2b48c;
-      padding: 0.5em;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li {
-      margin: 0 0.5em;
+      background-color: #6d4c41;
+      padding: 10px;
+      position: relative;
     }
     nav a {
+      color: white;
       text-decoration: none;
-      color: #4b3832;
-      font-weight: bold;
+      margin: 0 10px;
     }
     .menu-icon {
       display: none;
-      font-size: 1.5em;
+      font-size: 24px;
       cursor: pointer;
-      order: -1; /* icon on the left */
+      position: absolute;
+      left: 10px;
+      top: 10px;
     }
+    .nav-links {
+      display: flex;
+    }
+    section {
+      padding: 20px;
+    }
+    footer {
+      font-size: 14px;
+    }
+    /* responsive */
     @media (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
+      .nav-links {
         display: none;
+        flex-direction: column;
+        background-color: #6d4c41;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
       }
-      nav ul.show {
-        display: flex;
+      .nav-links a {
+        margin: 10px 0;
       }
       .menu-icon {
         display: block;
       }
     }
-    .container {
-      padding: 1em;
-      text-align: center;
+    button {
+      background-color: #4e342e;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin: 5px;
     }
-    footer {
-      margin-top: 2em;
+    input, textarea {
+      width: 100%;
+      margin: 5px 0;
+      padding: 5px;
+    }
+    .comments {
+      border-top: 1px solid #ccc;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>مرحبا بكم في متجر ELR الإلكتروني</h1>
-    <p id="greeting"></p>
-    <img src="logo.png" alt="شعار ELR" width="100" />
+    <h1 id="greeting">مرحبا بكم في متجر ELR الالكتروني</h1>
+    <img src="logo.png" alt="شعار المتجر" width="100">
   </header>
+
   <nav>
     <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
-    <ul id="navList">
-      <li><a href="#home">الرئيسية</a></li>
-      <li><a href="#about">من نحن</a></li>
-      <li><a href="#products">المنتجات</a></li>
-      <li><a href="#contact">تواصل معنا</a></li>
-      <li><a href="#comments">تعليقات العملاء</a></li>
-    </ul>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">الرئيسية</a>
+      <a href="#about">من نحن</a>
+      <a href="#products">المنتجات</a>
+      <a href="#contact">تواصل معنا</a>
+      <a href="#comments">تعليقات العملاء</a>
+      <button onclick="toggleLanguage()">EN</button>
+    </div>
   </nav>
 
-  <section id="home" class="container">
+  <section id="home">
     <h2>الرئيسية</h2>
-    <p>مرحباً بكم في متجر ELR الإلكتروني حيث تجد كل الخدمات الرقمية بسهولة.</p>
+    <p>مرحبا بكم في متجر ELR الالكتروني</p>
   </section>
 
-  <section id="about" class="container">
+  <section id="about">
     <h2>من نحن</h2>
-    <p>متجر الكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة.</p>
+    <p>متجر الكتروني متكامل للخدمات الالكترونية والرقمية  
+    بدقة و سرعة عالية في المعاملة</p>
   </section>
 
-  <section id="products" class="container">
+  <section id="products">
     <h2>المنتجات</h2>
+    <h3>العملات الرقمية</h3>
     <ul>
-      <li>العملات الرقمية
-        <ul>
-          <li>شراء العملات الرقمية</li>
-          <li>بيع العملات الرقمية</li>
-          <li>التعامل بعملة USDT</li>
-        </ul>
-      </li>
-      <li>خدمات التلجرام
-        <ul>
-          <li>توثيق التلجرام</li>
-          <li>شراء نجوم التلجرام</li>
-        </ul>
-      </li>
+      <li>شراء العملات الرقمية</li>
+      <li>بيع العملات الرقمية</li>
+      <li>التعامل بالعملة الرقمية USDT في البيع و الشراء</li>
+    </ul>
+    <h3>خدمات التلجرام</h3>
+    <ul>
+      <li>توثيق التلجرام</li>
+      <li>شراء نجوم التلجرام</li>
     </ul>
   </section>
 
-  <section id="contact" class="container">
+  <section id="contact">
     <h2>تواصل معنا</h2>
-    <p>
-      <strong>Telegram:</strong> <a href="https://t.me/ElnourMohammedAhmed">t.me/ElnourMohammedAhmed</a><br/>
-      <strong>Facebook:</strong> <a href="https://facebook.me/ElnourMohammedAhmed">facebook.me/ElnourMohammedAhmed</a><br/>
-      <strong>الخط الساخن:</strong> +249111118226
-    </p>
+    <p>رابط التلجرام: <a href="https://t.me/ElnourMohammedAhmed" target="_blank">Telegram.me/ElnourMohammedAhmed</a></p>
+    <p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed" target="_blank">Facebook.me/ElnourMohammedAhmed</a></p>
+    <p>الخط الساخن: +249111118226</p>
   </section>
 
-  <section id="comments" class="container">
+  <section id="comments">
     <h2>تعليقات العملاء</h2>
     <form id="commentForm">
-      <textarea placeholder="أضف تعليقك" required></textarea><br/>
-      <button type="submit">إرسال</button>
+      <textarea placeholder="اكتب تعليقك هنا" required></textarea>
+      <button type="submit">ارسال</button>
     </form>
-    <ul id="commentList"></ul>
+    <div class="comments" id="commentsList"></div>
   </section>
 
   <footer>
-    جميع الحقوق محفوظة &copy; ELR
+    جميع الحقوق محفوظة © ELR Ltd Service 2025
   </footer>
 
   <script>
-    function toggleMenu() {
-      document.getElementById('navList').classList.toggle('show');
-    }
-
-    // تحية صباحية او مسائية
-    const hour = new Date().getHours();
+    // greeting
     const greeting = document.getElementById('greeting');
-    if (hour >= 5 && hour < 12) {
-      greeting.textContent = 'صباح الخير 🌅';
-    } else if (hour >= 12 && hour < 18) {
-      greeting.textContent = 'مساء الخير ☀️';
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 18) {
+      greeting.textContent = 'صباح الخير بكم في متجر ELR الالكتروني';
     } else {
-      greeting.textContent = 'مساء الخير 🌙';
+      greeting.textContent = 'مساء الخير بكم في متجر ELR الالكتروني';
     }
 
-    // حفظ التعليقات
-    const form = document.getElementById('commentForm');
-    const list = document.getElementById('commentList');
+    // toggle menu
+    function toggleMenu() {
+      const links = document.getElementById('navLinks');
+      if (links.style.display === 'flex') {
+        links.style.display = 'none';
+      } else {
+        links.style.display = 'flex';
+      }
+    }
 
-    form.addEventListener('submit', function(e) {
+    // toggle language
+    function toggleLanguage() {
+      alert('ميزة الترجمة للإنجليزية قيد التطوير');
+    }
+
+    // comments
+    const form = document.getElementById('commentForm');
+    const list = document.getElementById('commentsList');
+    form.addEventListener('submit', e => {
       e.preventDefault();
       const text = form.querySelector('textarea').value;
-      const li = document.createElement('li');
-      li.textContent = text;
-      list.appendChild(li);
+      const p = document.createElement('p');
+      p.textContent = text;
+      list.appendChild(p);
       form.reset();
     });
   </script>
