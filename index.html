@@ -1,15 +1,20 @@
 <!DOCTYPE html><html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>متجر ELR الإلكتروني</title>
   <style>
     body {
+      margin: 0;
       font-family: sans-serif;
       direction: rtl;
-      text-align: right;
-      margin: 0;
-      padding: 0;
+      background-color: #fff;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
     nav {
       display: flex;
@@ -32,10 +37,9 @@
       margin: 0;
     }
     nav ul li {
-      cursor: pointer;
       padding: 8px 15px;
+      cursor: pointer;
       border-radius: 5px;
-      user-select: none;
     }
     nav ul li.active {
       background-color: #007bff;
@@ -45,35 +49,23 @@
     .section {
       display: none;
       padding: 20px;
-      min-height: 300px;
     }
     .section.active {
       display: block;
     }
     footer {
       text-align: center;
-      padding: 15px 10px;
+      padding: 10px;
       background: #f0f0f0;
-      margin-top: 20px;
       font-size: 0.9em;
-      color: #333;
     }
     .lang-switch {
-      cursor: pointer;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border: 1px solid #007bff;
-      border-radius: 5px;
       background: white;
+      cursor: pointer;
+      border-radius: 5px;
       font-weight: bold;
-      user-select: none;
-    }
-    #home div {
-      text-align: center;
-      padding: 30px;
-    }
-    #home img {
-      height: 100px;
-      margin-bottom: 20px;
     }@media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -89,32 +81,114 @@
     display: flex;
   }
   nav ul li {
-    padding: 10px;
     border-top: 1px solid #ccc;
   }
 }
 
   </style>
 </head>
-<body>
-  <nav>
+<body>  <header>
+    <h1 id="pageTitle">مرحباً بكم في متجر ELR الإلكتروني</h1>
+  </header>  <nav>
     <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
     <ul id="menu">
-      <li class="nav-item active" data-section="home" data-i18n-nav="home">الرئيسية</li>
-      <li class="nav-item" data-section="about" data-i18n-nav="about">من نحن</li>
-      <li class="nav-item" data-section="products" data-i18n-nav="products">المنتجات</li>
-      <li class="nav-item" data-section="contact" data-i18n-nav="contact">تواصل معنا</li>
-      <li class="nav-item" data-section="comments" data-i18n-nav="comments">تعليقات العملاء</li>
-      <li class="nav-item" data-section="payment" data-i18n-nav="payment">طرق الدفع</li>
+      <li class="nav-item active" data-section="home">الرئيسية</li>
+      <li class="nav-item" data-section="about">من نحن</li>
+      <li class="nav-item" data-section="products">المنتجات</li>
+      <li class="nav-item" data-section="contact">تواصل معنا</li>
+      <li class="nav-item" data-section="comments">تعليقات العملاء</li>
+      <li class="nav-item" data-section="payment">طرق الدفع</li>
     </ul>
+    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
+  </nav>  <section id="home" class="section active">
+    <p>مرحباً بكم في متجر ELR الإلكتروني. نحن نقدم خدمات رقمية متميزة تشمل العملات الرقمية وخدمات التليجرام.</p>
+  </section>
+  <section id="about" class="section">
+    <p>نحن شركة ELR، نسعى لتقديم أفضل الخدمات الرقمية لعملائنا بثقة وسرعة عالية.</p>
+  </section>
+  <section id="products" class="section">
+    <ul>
+      <li>عملات رقمية</li>
+      <li>بطاقات فيزا</li>
+      <li>توثيق حسابات تليجرام</li>
+      <li>نجوم تيليجرام</li>
+    </ul>
+  </section>
+  <section id="contact" class="section">
+    <p>تواصل معنا عبر:</p>
+    <ul>
+      <li>Telegram: @ELRsupport</li>
+      <li>Facebook: fb.com/ELRstore</li>
+      <li>الخط الساخن: +249 90 000 0000</li>
+    </ul>
+  </section>
+  <section id="comments" class="section">
     <div>
-      <span id="greeting" data-i18n-greeting>صباح الخير</span>
-      <button class="lang-switch" id="langBtn">EN</button>
+      <input type="text" id="commentInput" placeholder="أدخل تعليقك">
+      <button onclick="addComment()">إرسال</button>
     </div>
-  </nav>  <!-- بقية الأقسام موجودة بالفعل كما أرسلتها، وسأكمل عليك لاحقًا في التحديث داخل Canvas -->  <script>
+    <ul id="commentsList"></ul>
+  </section>
+  <section id="payment" class="section">
+    <p>نقبل الدفع عبر:</p>
+    <ul>
+      <li>محفظة بنكية</li>
+      <li>الفيزا</li>
+      <li>بايبال</li>
+    </ul>
+  </section>  <footer>
+    <p>جميع الحقوق محفوظة &copy; ELR 2025</p>
+  </footer>  <script>
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.section');
+    const commentsList = document.getElementById('commentsList');
+    const commentInput = document.getElementById('commentInput');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelector('.nav-item.active').classList.remove('active');
+        item.classList.add('active');
+
+        sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(item.dataset.section).classList.add('active');
+      });
+    });
+
     function toggleMenu() {
-      document.getElementById("menu").classList.toggle("show");
+      document.getElementById('menu').classList.toggle('show');
+    }
+
+    function addComment() {
+      const text = commentInput.value.trim();
+      if (text) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        commentsList.appendChild(li);
+        commentInput.value = '';
+      }
+    }
+
+    let currentLang = 'ar';
+    const translations = {
+      ar: {
+        home: 'الرئيسية', about: 'من نحن', products: 'المنتجات', contact: 'تواصل معنا', comments: 'تعليقات العملاء', payment: 'طرق الدفع',
+        title: 'مرحباً بكم في متجر ELR الإلكتروني',
+      },
+      en: {
+        home: 'Home', about: 'About Us', products: 'Products', contact: 'Contact Us', comments: 'Customer Comments', payment: 'Payment Methods',
+        title: 'Welcome to ELR Online Store',
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.getElementById('langBtn').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+
+      navItems.forEach(item => {
+        item.textContent = translations[currentLang][item.dataset.section];
+      });
+
+      document.getElementById('pageTitle').textContent = translations[currentLang].title;
     }
   </script></body>
 </html>
-
