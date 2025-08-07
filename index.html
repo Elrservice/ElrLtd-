@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,161 +6,201 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #4b2e2e;
+      font-family: sans-serif;
+      background-color: white;
+      color: #4e342e;
+    }
+    header, nav, section, footer {
+      padding: 20px;
     }
     header {
-      background-color: #4b2e2e;
+      background-color: #4e342e;
       color: white;
-      padding: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+    }
+    header img {
+      height: 60px;
     }
     nav {
       display: flex;
-      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: #795548;
     }
     nav a {
       color: white;
       text-decoration: none;
+      padding: 10px 20px;
+      display: block;
     }
-    .lang-toggle {
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      background-color: white;
-      color: #4b2e2e;
+    nav a:hover {
+      background-color: #5d4037;
+    }
+    .language-switch {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #d7ccc8;
+      color: #4e342e;
       border: none;
-      border-radius: 5px;
-    }
-    .menu {
-      display: none;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .hamburger {
-      display: none;
+      padding: 5px 10px;
       cursor: pointer;
+    }
+    .content {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    #menuToggle {
+      display: none;
     }
     @media (max-width: 768px) {
       nav {
         display: none;
+        flex-direction: column;
       }
-      .hamburger {
-        display: block;
-      }
-      .menu {
+      nav.show {
         display: flex;
       }
+      .menu-icon {
+        display: block;
+        font-size: 30px;
+        cursor: pointer;
+        padding: 10px;
+      }
     }
-    main {
-      padding: 2rem;
-      text-align: center;
-    }
-    .logo {
-      max-width: 150px;
-    }
-    textarea {
+    .comments textarea {
       width: 100%;
-      max-width: 600px;
-      height: 100px;
+      height: 80px;
     }
-    .comments {
-      max-width: 600px;
-      margin: auto;
-      text-align: right;
+    .comments button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #4e342e;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div>
-      <img src="logo.png" alt="شعار ELR" class="logo" />
-    </div>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <nav id="navbar">
-      <a href="#home">الرئيسية</a>
-      <a href="#about">من نحن</a>
-      <a href="#products">المنتجات</a>
-      <a href="#contact">تواصل معنا</a>
-      <a href="#comments">تعليقات العملاء</a>
-    </nav>
-    <button class="lang-toggle" onclick="toggleLanguage()">English</button>
-  </header>
-  <div class="menu" id="mobileMenu"></div>  <main>
+  <button class="language-switch" onclick="toggleLanguage()">English</button>  <header>
+    <img src="logo.png" alt="شعار ELR" />
+    <h1 id="home-title">مرحباً بكم في متجر ELR الإلكتروني</h1>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  </header>  <nav id="main-nav">
+    <a href="#home" onclick="showPage('home')">الرئيسية</a>
+    <a href="#about" onclick="showPage('about')">من نحن</a>
+    <a href="#products" onclick="showPage('products')">المنتجات</a>
+    <a href="#contact" onclick="showPage('contact')">تواصل معنا</a>
+    <a href="#comments" onclick="showPage('comments')">تعليقات العملاء</a>
+  </nav>  <div class="content">
     <section id="home">
-      <h1 data-ar="مرحباً بكم في متجر ELR الإلكتروني" data-en="Welcome to ELR Online Store">مرحباً بكم في متجر ELR الإلكتروني</h1>
-    </section><section id="about">
-  <p data-ar="متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة"
-     data-en="A comprehensive e-store for digital and electronic services with high precision and speed.">
-    متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة
-  </p>
+      <p>مرحباً بكم في متجر ELR الإلكتروني</p>
+    </section><section id="about" style="display:none">
+  <p>متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية<br>بدقة وسرعة عالية في المعاملة</p>
 </section>
 
-<section id="products">
-  <h2 data-ar="العملات الرقمية" data-en="Digital Currencies">العملات الرقمية</h2>
+<section id="products" style="display:none">
+  <h3>العملات الرقمية:</h3>
   <ul>
-    <li data-ar="شراء العملات الرقمية" data-en="Buy digital currencies">شراء العملات الرقمية</li>
-    <li data-ar="بيع العملات الرقمية" data-en="Sell digital currencies">بيع العملات الرقمية</li>
-    <li data-ar="التعامل بالعملة الرقمية USDT في البيع والشراء" data-en="Trading with USDT">التعامل بالعملة الرقمية USDT في البيع والشراء</li>
+    <li>شراء العملات الرقمية</li>
+    <li>بيع العملات الرقمية</li>
+    <li>التعامل بالعملة الرقمية USDT في البيع والشراء</li>
   </ul>
-  <h2 data-ar="خدمات التلجرام" data-en="Telegram Services">خدمات التلجرام</h2>
+  <h3>خدمات التلجرام:</h3>
   <ul>
-    <li data-ar="توثيق التلجرام" data-en="Telegram verification">توثيق التلجرام</li>
-    <li data-ar="شراء نجوم التلجرام" data-en="Buy Telegram Stars">شراء نجوم التلجرام</li>
+    <li>توثيق التلجرام</li>
+    <li>شراء نجوم التلجرام</li>
   </ul>
 </section>
 
-<section id="contact">
-  <h2 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h2>
-  <p><strong>Telegram:</strong> <a href="https://t.me/ElnourMohammedAhmed">Telegram.me/ElnourMohammedAhmed</a></p>
-  <p><strong>Facebook:</strong> <a href="https://facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></p>
-  <p><strong data-ar="الخط الساخن" data-en="Hotline">الخط الساخن</strong>: +249111118226</p>
+<section id="contact" style="display:none">
+  <p>رابط التلجرام: <a href="https://t.me/ElnourMohammedAhmed" target="_blank">Telegram.me/ElnourMohammedAhmed</a></p>
+  <p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed" target="_blank">Facebook.me/ElnourMohammedAhmed</a></p>
+  <p>الخط الساخن: +249111118226</p>
 </section>
 
-<section id="comments">
-  <h2 data-ar="تعليقات العملاء" data-en="Customer Comments">تعليقات العملاء</h2>
-  <form onsubmit="saveComment(event)">
-    <textarea placeholder="اكتب تعليقك هنا" required></textarea><br><br>
-    <button type="submit">إرسال</button>
-  </form>
-  <div class="comments" id="commentList"></div>
+<section id="comments" class="comments" style="display:none">
+  <h3>تعليقات العملاء</h3>
+  <div id="comments-list"></div>
+  <textarea id="new-comment" placeholder="اكتب تعليقك هنا..."></textarea>
+  <button onclick="addComment()">إرسال</button>
 </section>
 
-  </main>  <script>
+  </div>  <script>
+    let currentLang = 'ar';
+
     function toggleLanguage() {
-      const elements = document.querySelectorAll('[data-ar]');
-      const isArabic = document.documentElement.lang === 'ar';
-      elements.forEach(el => {
-        el.textContent = isArabic ? el.dataset.en : el.dataset.ar;
-      });
-      document.documentElement.lang = isArabic ? 'en' : 'ar';
-      document.querySelector('.lang-toggle').textContent = isArabic ? 'العربية' : 'English';
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.querySelector('.language-switch').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+
+      const translations = {
+        'ar': {
+          home: 'الرئيسية',
+          about: 'من نحن',
+          products: 'المنتجات',
+          contact: 'تواصل معنا',
+          comments: 'تعليقات العملاء',
+          homeTitle: 'مرحباً بكم في متجر ELR الإلكتروني'
+        },
+        'en': {
+          home: 'Home',
+          about: 'About Us',
+          products: 'Products',
+          contact: 'Contact Us',
+          comments: 'Customer Comments',
+          homeTitle: 'Welcome to ELR Online Store'
+        }
+      };
+
+      document.querySelectorAll('nav a')[0].innerText = translations[currentLang].home;
+      document.querySelectorAll('nav a')[1].innerText = translations[currentLang].about;
+      document.querySelectorAll('nav a')[2].innerText = translations[currentLang].products;
+      document.querySelectorAll('nav a')[3].innerText = translations[currentLang].contact;
+      document.querySelectorAll('nav a')[4].innerText = translations[currentLang].comments;
+      document.getElementById('home-title').innerText = translations[currentLang].homeTitle;
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
     }
 
     function toggleMenu() {
-      const menu = document.getElementById('mobileMenu');
-      if (menu.innerHTML === '') {
-        menu.innerHTML = document.getElementById('navbar').innerHTML;
-      } else {
-        menu.innerHTML = '';
+      document.getElementById('main-nav').classList.toggle('show');
+    }
+
+    function addComment() {
+      const comment = document.getElementById('new-comment').value;
+      if (comment.trim()) {
+        const div = document.createElement('div');
+        div.textContent = comment;
+        document.getElementById('comments-list').appendChild(div);
+        document.getElementById('new-comment').value = '';
+        saveComment(comment);
       }
     }
 
-    function saveComment(e) {
-      e.preventDefault();
-      const textarea = e.target.querySelector('textarea');
-      const comment = textarea.value;
-      if (comment) {
-        const list = document.getElementById('commentList');
-        const div = document.createElement('div');
-        div.textContent = comment;
-        div.style.borderBottom = '1px solid #ccc';
-        div.style.padding = '10px';
-        list.prepend(div);
-        textarea.value = '';
-      }
+    function saveComment(comment) {
+      let comments = JSON.parse(localStorage.getItem('comments') || '[]');
+      comments.push(comment);
+      localStorage.setItem('comments', JSON.stringify(comments));
     }
+
+    function loadComments() {
+      let comments = JSON.parse(localStorage.getItem('comments') || '[]');
+      const list = document.getElementById('comments-list');
+      comments.forEach(c => {
+        const div = document.createElement('div');
+        div.textContent = c;
+        list.appendChild(div);
+      });
+    }
+
+    loadComments();
   </script></body>
 </html>
