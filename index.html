@@ -1,225 +1,165 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>متجر ELR الإلكتروني</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       margin: 0;
+      padding: 0;
       background-color: #fff8f0;
-      color: #4b2e1e;
+      color: #3e2723;
     }
-
     header {
-      background-color: #4b2e1e;
+      background-color: #4e342e;
       color: white;
+      padding: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      flex-wrap: wrap;
     }
-
-    header img {
-      height: 50px;
-    }
-
-    nav {
+    nav ul {
+      list-style: none;
+      padding: 0;
       display: flex;
       flex-wrap: wrap;
     }
-
-    nav a {
-      color: white;
-      padding: 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      background-color: #7b4f35;
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 28px;
+    nav li {
+      margin: 0 1rem;
       cursor: pointer;
     }
-
-    .section {
-      padding: 20px;
+    .content > section {
       display: none;
+      padding: 2rem;
     }
-
+    .content > section.active {
+      display: block;
+    }
     footer {
       text-align: center;
-      padding: 10px;
-      background-color: #4b2e1e;
+      padding: 1rem;
+      background: #4e342e;
       color: white;
     }
-
-    input, button {
-      padding: 10px;
-      margin-top: 10px;
+    .lang-toggle {
+      cursor: pointer;
     }
-
-    .comment {
-      background-color: #f5e7d5;
-      margin: 5px 0;
-      padding: 10px;
+    .dropdown {
+      position: relative;
     }
-
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .dropdown-content div {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
     @media (max-width: 768px) {
-      nav {
+      nav ul {
         flex-direction: column;
-        display: none;
-        width: 100%;
       }
-
-      nav.active {
-        display: flex;
-      }
-
-      .menu-toggle {
-        display: block;
-        order: -1;
+      nav li {
+        margin: 0.5rem 0;
       }
     }
   </style>
 </head>
 <body>
-
-<header>
-  <img src="logo.png" alt="ELR Logo" />
-  <span id="greeting">مرحباً بكم في متجر ELR الإلكتروني</span>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <nav id="navbar">
-    <a href="#" onclick="showSection('home')" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
-    <a href="#" onclick="showSection('about')" data-ar="من نحنا" data-en="About Us">من نحنا</a>
-    <a href="#" onclick="showSection('products')" data-ar="المنتجات" data-en="Products">المنتجات</a>
-    <a href="#" onclick="showSection('contact')" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
-    <a href="#" onclick="showSection('comments')" data-ar="تعليقات العملاء" data-en="Customer Comments">تعليقات العملاء</a>
-    <button onclick="toggleLanguage()">English</button>
-  </nav>
-</header>
-
-<section id="home" class="section" style="display: block;">
-  <h2 data-ar="مرحباً بكم في متجر ELR الإلكتروني" data-en="Welcome to ELR Online Store">مرحباً بكم في متجر ELR الإلكتروني</h2>
-</section>
-
-<section id="about" class="section">
-  <h2 data-ar="من نحنا" data-en="About Us">من نحنا</h2>
-  <p data-ar="متجر الكتروني متكامل للخدمات الالكترونية والرقمية بدقة و سرعة عالية في المعاملة"
-     data-en="A complete online store for digital and electronic services with high accuracy and speed in transactions">
-    متجر الكتروني متكامل للخدمات الالكترونية والرقمية بدقة و سرعة عالية في المعاملة
+  <header>
+    <div>
+      <img src="logo.png" alt="ELR Logo" style="height: 40px; vertical-align: middle;">
+      <span id="greeting">مرحبًا بكم في متجر ELR الإلكتروني</span>
+    </div>
+    <div class="lang-toggle" onclick="toggleLanguage()">EN</div>
+  </header>
+  <nav>
+    <ul>
+      <li onclick="showSection('home')" data-ar="الرئيسية" data-en="Home">الرئيسية</li>
+      <li onclick="showSection('about')" data-ar="من نحن" data-en="About Us">من نحن</li>
+      <li class="dropdown" data-ar="المنتجات" data-en="Products">
+        المنتجات
+        <div class="dropdown-content">
+          <div data-ar="شراء العملات الرقمية" data-en="Buy Crypto">شراء العملات الرقمية</div>
+          <div data-ar="بيع العملات الرقمية" data-en="Sell Crypto">بيع العملات الرقمية</div>
+          <div data-ar="التعامل بـ USDT" data-en="Deal with USDT">التعامل بـ USDT</div>
+          <div data-ar="توثيق التليجرام" data-en="Telegram Verification">توثيق التليجرام</div>
+          <div data-ar="شراء نجوم التليجرام" data-en="Buy Telegram Stars">شراء نجوم التليجرام</div>
+        </div>
+      </li>
+      <li onclick="showSection('contact')" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</li>
+      <li onclick="showSection('comments')" data-ar="تعليقات العملاء" data-en="Customer Comments">تعليقات العملاء</li>
+    </ul>
+  </nav>  <div class="content">
+    <section id="home" class="active">
+      <h2 data-ar="مرحبًا بكم في متجر ELR الإلكتروني" data-en="Welcome to ELR Online Store">مرحبًا بكم في متجر ELR الإلكتروني</h2>
+    </section><section id="about">
+  <p data-ar="متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة"
+     data-en="A complete online store for electronic and digital services with accuracy and high-speed processing">
+     متجر إلكتروني متكامل للخدمات الإلكترونية والرقمية بدقة وسرعة عالية في المعاملة
   </p>
 </section>
 
-<section id="products" class="section">
-  <h2 data-ar="المنتجات" data-en="Products">المنتجات</h2>
-  <ul>
-    <li data-ar="العملات الرقمية" data-en="Digital Currencies">العملات الرقمية
-      <ul>
-        <li data-ar="شراء العملات الرقمية" data-en="Buy Digital Currencies">شراء العملات الرقمية</li>
-        <li data-ar="بيع العملات الرقمية" data-en="Sell Digital Currencies">بيع العملات الرقمية</li>
-        <li data-ar="التعامل بـ USDT" data-en="USDT Transactions">التعامل بالعملة الرقمية USDT في البيع والشراء</li>
-      </ul>
-    </li>
-    <li data-ar="خدمات التلجرام" data-en="Telegram Services">خدمات التلجرام
-      <ul>
-        <li data-ar="توثيق التلجرام" data-en="Telegram Verification">توثيق التلجرام</li>
-        <li data-ar="شراء نجوم التلجرام" data-en="Buy Telegram Stars">شراء نجوم التلجرام</li>
-      </ul>
-    </li>
-  </ul>
+<section id="contact">
+  <p><strong>Telegram:</strong> <a href="https://t.me/ElnourMohammedAhmed">@ElnourMohammedAhmed</a></p>
+  <p><strong>Facebook:</strong> <a href="https://facebook.com/ElnourMohammedAhmed">/ElnourMohammedAhmed</a></p>
+  <p><strong>Hotline:</strong> +249111118226</p>
 </section>
 
-<section id="contact" class="section">
-  <h2 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h2>
-  <ul>
-    <li><b>Telegram:</b> <a href="https://telegram.me/ElnourMohammedAhmed">Telegram.me/ElnourMohammedAhmed</a></li>
-    <li><b>Facebook:</b> <a href="https://facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></li>
-    <li><b>Hotline:</b> +249111118226</li>
-  </ul>
+<section id="comments">
+  <h3 data-ar="تعليقات العملاء" data-en="Customer Comments">تعليقات العملاء</h3>
+  <textarea id="commentInput" placeholder="اكتب تعليقك هنا..." rows="4" cols="50"></textarea><br>
+  <button onclick="submitComment()">إرسال</button>
+  <ul id="commentsList"></ul>
 </section>
 
-<section id="comments" class="section">
-  <h2 data-ar="تعليقات العملاء" data-en="Customer Comments">تعليقات العملاء</h2>
-  <div>
-    <input type="text" id="commentInput" placeholder="اكتب تعليقك هنا" />
-    <button id="submitComment" data-ar="إرسال" data-en="Submit">إرسال</button>
-  </div>
-  <div id="commentsList"></div>
-</section>
+  </div>  <footer>
+    <p data-ar="جميع الحقوق محفوظة © 2025" data-en="All rights reserved © 2025">جميع الحقوق محفوظة © 2025</p>
+  </footer>  <script>
+    function showSection(id) {
+      document.querySelectorAll('.content > section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
-<footer>
-  <p data-ar="جميع الحقوق محفوظة © ELR" data-en="All rights reserved © ELR">جميع الحقوق محفوظة © ELR</p>
-</footer>
+    function toggleLanguage() {
+      const currentLang = document.documentElement.lang;
+      const newLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = newLang;
+      document.querySelector('.lang-toggle').innerText = newLang === 'ar' ? 'EN' : 'AR';
 
-<script>
-  // إظهار قسم معين فقط
-  function showSection(id) {
-    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
-  }
+      document.querySelectorAll('[data-ar]').forEach(el => {
+        el.innerText = newLang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+      });
+    }
 
-  // تبديل القائمة في الهاتف
-  function toggleMenu() {
-    document.getElementById("navbar").classList.toggle("active");
-  }
+    function submitComment() {
+      const commentInput = document.getElementById('commentInput');
+      const comment = commentInput.value.trim();
+      if (comment) {
+        const li = document.createElement('li');
+        li.textContent = comment;
+        document.getElementById('commentsList').appendChild(li);
+        commentInput.value = '';
+      }
+    }
 
-  // التبديل بين اللغتين
-  let currentLang = "ar";
-  function toggleLanguage() {
-    currentLang = currentLang === "ar" ? "en" : "ar";
-    document.querySelectorAll('[data-ar]').forEach(el => {
-      el.textContent = el.getAttribute(`data-${currentLang}`);
-    });
-    document.querySelector('button[onclick="toggleLanguage()"]').textContent = currentLang === "ar" ? "English" : "العربية";
-  }
-
-  // تغيير التحية حسب الوقت
-  const now = new Date().getHours();
-  const greeting = document.getElementById("greeting");
-  if (now >= 5 && now < 12) {
-    greeting.textContent = "صباح الخير في متجر ELR الإلكتروني";
-  } else if (now >= 12 && now < 18) {
-    greeting.textContent = "مساء الخير في متجر ELR الإلكتروني";
-  } else {
-    greeting.textContent = "مرحباً بكم في متجر ELR الإلكتروني";
-  }
-
-  // التعليقات
-  function loadComments() {
-    const comments = JSON.parse(localStorage.getItem("comments")) || [];
-    const container = document.getElementById("commentsList");
-    container.innerHTML = "";
-    comments.forEach(comment => {
-      const div = document.createElement("div");
-      div.className = "comment";
-      div.textContent = comment;
-      container.appendChild(div);
-    });
-  }
-
-  function addComment() {
-    const input = document.getElementById("commentInput");
-    const comment = input.value.trim();
-    if (!comment) return;
-    const comments = JSON.parse(localStorage.getItem("comments")) || [];
-    comments.push(comment);
-    localStorage.setItem("comments", JSON.stringify(comments));
-    input.value = "";
-    loadComments();
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("submitComment").addEventListener("click", addComment);
-    loadComments();
-  });
-</script>
-
-</body>
+    // Greeting by time
+    const greeting = document.getElementById("greeting");
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      greeting.innerText = "صباح الخير في متجر ELR الإلكتروني";
+    } else if (hour >= 12 && hour < 18) {
+      greeting.innerText = "مساء الخير في متجر ELR الإلكتروني";
+    } else {
+      greeting.innerText = "مرحبًا بكم في متجر ELR الإلكتروني";
+    }
+  </script></body>
 </html>
