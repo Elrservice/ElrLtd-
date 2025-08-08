@@ -6,24 +6,26 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       direction: rtl;
+      background-color: #f4f4f4;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
-      background-color: #222;
+      background-color: #1a1a1a;
       color: white;
       position: relative;
     }
     .logo {
       font-weight: bold;
-      font-size: 24px;
+      font-size: 26px;
+      color: #00d084;
     }
     .menu-toggle {
-      font-size: 24px;
+      font-size: 26px;
       background: none;
       border: none;
       color: white;
@@ -46,6 +48,10 @@
       text-decoration: none;
       color: black;
       border-bottom: 1px solid #ccc;
+      transition: background 0.3s;
+    }
+    .nav-links a:hover {
+      background-color: #eee;
     }
     .nav-links.active {
       display: flex;
@@ -60,7 +66,10 @@
       .nav-links a {
         color: white;
         border: none;
-        padding: 0 10px;
+        padding: 0 15px;
+      }
+      .nav-links a:hover {
+        color: #00d084;
       }
       .menu-toggle {
         display: none;
@@ -68,12 +77,53 @@
     }
     section {
       padding: 60px 20px;
+      background: white;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #222;
     }
     footer {
-      background-color: #222;
+      background-color: #1a1a1a;
       color: white;
       text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    #commentForm textarea {
+      width: 100%;
+      border-radius: 8px;
       padding: 10px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+    #commentForm button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #00d084;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #commentsList div {
+      background-color: #e6f7f1;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .lang-toggle {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      background-color: #00d084;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -81,6 +131,7 @@
   <header>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <div class="logo">ELR</div>
+    <button class="lang-toggle" onclick="toggleLanguage()">EN</button>
     <nav class="nav-links">
       <a href="#home">الرئيسية</a>
       <a href="#about">من نحن</a>
@@ -89,38 +140,36 @@
       <a href="#comments">تعليقات العملاء</a>
     </nav>
   </header>  <section id="home">
-    <h1>مرحبا بكم في متجر ELR الالكتروني</h1>
-    <p>شعار ELR</p>
+    <h1 data-ar="مرحبا بكم في متجر ELR الالكتروني" data-en="Welcome to ELR Online Store">مرحبا بكم في متجر ELR الالكتروني</h1>
+    <p data-ar="شعار ELR" data-en="ELR Motto">شعار ELR</p>
   </section>  <section id="about">
-    <h2>من نحن</h2>
-    <p>نحن متخصصون في تقديم خدمات العملات الرقمية وبطاقات الفيزا وخدمات التلجرام.</p>
+    <h2 data-ar="من نحن" data-en="About Us">من نحن</h2>
+    <p data-ar="نحن متخصصون في تقديم خدمات العملات الرقمية وبطاقات الفيزا وخدمات التلجرام." data-en="We specialize in digital currencies, Visa cards, and Telegram services.">نحن متخصصون في تقديم خدمات العملات الرقمية وبطاقات الفيزا وخدمات التلجرام.</p>
   </section>  <section id="products">
-    <h2>المنتجات</h2>
+    <h2 data-ar="المنتجات" data-en="Products">المنتجات</h2>
     <ul>
-      <li>عملات رقمية</li>
-      <li>بطاقات فيزا</li>
-      <li>خدمات التلجرام (توثيق، نجوم)</li>
+      <li data-ar="عملات رقمية" data-en="Digital Currencies">عملات رقمية</li>
+      <li data-ar="بطاقات فيزا" data-en="Visa Cards">بطاقات فيزا</li>
+      <li data-ar="خدمات التلجرام (توثيق، نجوم)" data-en="Telegram Services (Verification, Stars)">خدمات التلجرام (توثيق، نجوم)</li>
     </ul>
   </section>  <section id="contact">
-    <h2>تواصل معنا</h2>
-    <p>فيسبوك - تلجرام - الخط الساخن</p>
+    <h2 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h2>
+    <p data-ar="فيسبوك - تلجرام - الخط الساخن" data-en="Facebook - Telegram - Hotline">فيسبوك - تلجرام - الخط الساخن</p>
   </section>  <section id="comments">
-    <h2>تعليقات العملاء</h2>
+    <h2 data-ar="تعليقات العملاء" data-en="Customer Comments">تعليقات العملاء</h2>
     <form id="commentForm">
-      <textarea id="commentInput" rows="4" cols="50" placeholder="اكتب تعليقك هنا"></textarea>
+      <textarea id="commentInput" rows="4" placeholder="اكتب تعليقك هنا" data-ar="اكتب تعليقك هنا" data-en="Write your comment here"></textarea>
       <br>
-      <button type="submit">إرسال</button>
+      <button type="submit" data-ar="إرسال" data-en="Submit">إرسال</button>
     </form>
     <div id="commentsList"></div>
   </section>  <footer>
-    جميع الحقوق محفوظة © ELR 2025
+    <span data-ar="جميع الحقوق محفوظة © ELR 2025" data-en="All rights reserved © ELR 2025">جميع الحقوق محفوظة © ELR 2025</span>
   </footer>  <script>
     function toggleMenu() {
-      const nav = document.querySelector('.nav-links');
-      nav.classList.toggle('active');
+      document.querySelector('.nav-links').classList.toggle('active');
     }
 
-    // تشغيل نموذج التعليقات
     document.getElementById('commentForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const input = document.getElementById('commentInput');
@@ -133,5 +182,14 @@
         input.value = '';
       }
     });
+
+    let currentLang = 'ar';
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + currentLang);
+      });
+      document.querySelector('.lang-toggle').textContent = currentLang === 'ar' ? 'EN' : 'AR';
+    }
   </script></body>
 </html>
