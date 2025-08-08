@@ -29,7 +29,7 @@
       color: white;
       text-decoration: none;
       margin: 0 10px;
-      padding: 5px 10px;
+      padding: 8px 12px;
       transition: all 0.3s ease;
     }
     nav a:hover {
@@ -49,6 +49,7 @@
       border-radius: 5px;
       font-weight: bold;
       transition: all 0.3s ease;
+      margin-left: 10px;
     }
     .lang-toggle:hover {
       background-color: #f0f0f0;
@@ -74,38 +75,49 @@
     .nav-container {
       display: flex;
       align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
     }
     @media (max-width: 768px) {
-      nav {
-        flex-direction: row;
-        align-items: center;
-      }
       .nav-links {
         display: none;
-        flex-direction: column;
         width: 100%;
         background-color: #3a2424;
-        position: absolute;
-        top: 60px;
-        left: 0;
         padding: 10px 0;
+        order: 3;
+        margin-top: 15px;
       }
       .nav-links.active {
         display: flex;
+        flex-direction: column;
       }
       .nav-links a {
+        width: 100%;
+        margin: 5px 0;
         padding: 10px 20px;
-        margin: 0;
+        box-sizing: border-box;
       }
       .hamburger {
         display: block;
+      }
+      .lang-toggle {
+        margin-left: auto;
+      }
+    }
+    @media (min-width: 769px) {
+      .nav-links {
+        display: flex !important;
       }
     }
     .hamburger {
       cursor: pointer;
       font-size: 24px;
-      margin-left: 15px;
       display: none;
+      padding: 5px;
     }
     textarea {
       width: 100%;
@@ -159,17 +171,19 @@
 <body>
   <nav>
     <div class="nav-container">
-      <div class="hamburger">☰</div>
       <div class="logo">ELR</div>
+      <div class="nav-right">
+        <button class="lang-toggle">English</button>
+        <div class="hamburger">☰</div>
+      </div>
+      <div class="nav-links">
+        <a href="#home" data-key="home">الرئيسية</a>
+        <a href="#about" data-key="about">من نحن</a>
+        <a href="#products" data-key="products">المنتجات</a>
+        <a href="#contact" data-key="contact">تواصل معنا</a>
+        <a href="#comments" data-key="comments">تعليقات العملاء</a>
+      </div>
     </div>
-    <div class="nav-links">
-      <a href="#home" data-key="home">الرئيسية</a>
-      <a href="#about" data-key="about">من نحن</a>
-      <a href="#products" data-key="products">المنتجات</a>
-      <a href="#contact" data-key="contact">تواصل معنا</a>
-      <a href="#comments" data-key="comments">تعليقات العملاء</a>
-    </div>
-    <button class="lang-toggle">English</button>
   </nav>
 
   <div class="content" id="page-content">
@@ -289,7 +303,7 @@
     };
 
     let currentLang = "ar";
-    let comments = []; // تخزين التعليقات
+    let comments = [];
 
     document.querySelector(".lang-toggle").addEventListener("click", () => {
       currentLang = currentLang === "ar" ? "en" : "ar";
@@ -347,8 +361,6 @@
           break;
         case "#comments":
           document.getElementById("page-content").innerHTML = langData.commentsContent;
-          // إضافة حدث النقر على زر الإرسال بعد تحميل الصفحة
-          document.getElementById("submit-comment")?.addEventListener("click", submitComment);
           document.getElementById("submit-comment")?.addEventListener("click", submitComment);
           renderComments();
           break;
@@ -372,7 +384,6 @@
       renderComments();
       document.getElementById("comment-text").value = "";
       
-      // حفظ التعليقات في localStorage
       localStorage.setItem('elr-store-comments', JSON.stringify(comments));
     }
 
@@ -382,7 +393,6 @@
       
       if (!commentList) return;
       
-      // تحميل التعليقات من localStorage
       const savedComments = localStorage.getItem('elr-store-comments');
       if (savedComments) {
         comments = JSON.parse(savedComments);
@@ -395,7 +405,6 @@
       
       if (noCommentsMsg) noCommentsMsg.style.display = "none";
       
-      // عرض التعليقات حسب اللغة الحالية
       const filteredComments = comments.filter(comment => comment.lang === currentLang);
       
       if (filteredComments.length === 0) {
@@ -430,14 +439,34 @@
       loadPage(window.location.hash);
     });
 
-    document.querySelector(".hamburger").addEventListener("click", () => {
-      document.querySelector(".nav-links").classList.toggle("active");
+    // تحسين القائمة المنسدلة للهاتف
+    document.querySelector(".hamburger").addEventListener("click", function() {
+      const navLinks = document.querySelector(".nav-links");
+      navLinks.classList.toggle("active");
+      
+      // إغلاق القائمة عند النقر خارجها
+      if (navLinks.classList.contains("active")) {
+        document.addEventListener("click", closeMenuOnClickOutside);
+      } else {
+        document.removeEventListener("click", closeMenuOnClickOutside);
+      }
     });
 
-    // Close mobile menu when clicking on a link
+    function closeMenuOnClickOutside(e) {
+      const navLinks = document.querySelector(".nav-links");
+      const hamburger = document.querySelector(".hamburger");
+      
+      if (!navLinks.contains(e.target) && e.target !== hamburger) {
+        navLinks.classList.remove("active");
+        document.removeEventListener("click", closeMenuOnClickOutside);
+      }
+    }
+
+    // إغلاق القائمة عند اختيار عنصر
     document.querySelectorAll(".nav-links a").forEach(link => {
       link.addEventListener("click", () => {
         document.querySelector(".nav-links").classList.remove("active");
+        document.removeEventListener("click", closeMenuOnClickOutside);
       });
     });
 
@@ -447,10 +476,28 @@
       showGreeting();
       loadPage(window.location.hash || "#home");
       
-      // تحميل التعليقات المحفوظة عند بدء التحميل
       const savedComments = localStorage.getItem('elr-store-comments');
       if (savedComments) {
         comments = JSON.parse(savedComments);
+      }
+      
+      // إظهار القائمة المنسدلة تلقائياً إذا كانت الشاشة صغيرة
+      if (window.innerWidth <= 768) {
+        document.querySelector(".hamburger").style.display = "block";
+        document.querySelector(".nav-links").style.display = "none";
+      }
+    });
+
+    // تحديث القائمة عند تغيير حجم النافذة
+    window.addEventListener("resize", function() {
+      if (window.innerWidth > 768) {
+        document.querySelector(".nav-links").style.display = "flex";
+        document.querySelector(".hamburger").style.display = "none";
+      } else {
+        document.querySelector(".hamburger").style.display = "block";
+        if (!document.querySelector(".nav-links").classList.contains("active")) {
+          document.querySelector(".nav-links").style.display = "none";
+        }
       }
     });
   </script>
