@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -87,22 +86,13 @@
       <a href="#comments" data-key="comments">تعليقات العملاء</a>
     </div>
     <button class="lang-toggle">English</button>
-  </nav>
-
-  <div class="content" id="page-content">
+  </nav>  <div class="content" id="page-content">
     <h1 id="home-title">مرحبا بكم في متجر ELR الالكتروني</h1>
     <div class="greeting" id="greeting"></div>
     <img src="logo.png" alt="شعار ELR" style="max-width:200px" />
-  </div>
-
-
-<footer>
-  <span id="footer-text" data-translate="footerText">جميع الحقوق محفوظة © ELR 2025</span>
-</footer>
-    
-  
-
-  <script>
+  </div>  <footer>
+    <span id="footer-text">جميع الحقوق محفوظة © ELR 2025</span>
+  </footer>  <script>
     const translations = {
       en: {
         home: "Home",
@@ -132,7 +122,7 @@
           <p>Facebook: <a href="https://Facebook.me/ElnourMohammedAhmed">Facebook Link</a></p>
           <p>Hotline: +249111118226</p>
         `,
-        commentsContent: "<h2>Customer Comments</h2><p>You can leave your comment below:</p>"
+        commentsContent: "<h2>Customer Comments</h2><p>You can leave your comment below:</p>",
         footerText: "All rights reserved © ELR 2025"
       },
       ar: {
@@ -163,10 +153,8 @@
           <p>رابط الفيسبوك: <a href="https://Facebook.me/ElnourMohammedAhmed">Facebook.me/ElnourMohammedAhmed</a></p>
           <p>الخط الساخن: +249111118226</p>
         `,
-        commentsContent: "<h2>تعليقات العملاء</h2><p>يمكنك كتابة تعليقك بالأسفل:</p>"
-
-footerText: "جميع الحقوق محفوظة © ELR 2025"
-        
+        commentsContent: "<h2>تعليقات العملاء</h2><p>يمكنك كتابة تعليقك بالأسفل:</p>",
+        footerText: "جميع الحقوق محفوظة © ELR 2025"
       }
     };
 
@@ -184,7 +172,7 @@ footerText: "جميع الحقوق محفوظة © ELR 2025"
         const key = a.dataset.key;
         a.textContent = langData[key];
       });
-
+      document.getElementById("footer-text").textContent = langData.footerText;
       const hash = window.location.hash || "#home";
       loadPage(hash);
     }
@@ -208,50 +196,46 @@ footerText: "جميع الحقوق محفوظة © ELR 2025"
         case "#contact":
           document.getElementById("page-content").innerHTML = langData.contactContent;
           break;
-case "#comments":
-  document.getElementById("page-content").innerHTML = 
-    langData.commentsContent + 
-    `<textarea id="commentBox" rows="4" cols="40" placeholder="${currentLang === 'ar' ? 'اكتب تعليقك' : 'Write your comment'}"></textarea><br>
-     <button id="submitComment">${currentLang === 'ar' ? 'ارسال' : 'Submit'}</button>
-     <div id="commentsList"></div>`;
-  
-  document.getElementById("submitComment").addEventListener("click", () => {
-    const comment = document.getElementById("commentBox").value.trim();
-    if (comment) {
-      const div = document.createElement("div");
-      div.textContent = comment;
-      document.getElementById("commentsList").appendChild(div);
-      document.getElementById("commentBox").value = "";
-    }
-  });
-  break;
-          
-      }
-    }
+        case "#comments":
+          document.getElementById("page-content").innerHTML =
+            langData.commentsContent +
+            `<textarea id="commentBox" rows="4" cols="40" placeholder="${currentLang === 'ar' ? 'اكتب تعليقك' : 'Write your comment'}"></textarea><br><button id="submitComment">${currentLang === 'ar' ? 'ارسال' : 'Submit'}</button>
+         <div id="commentsList"></div>`;
 
-    function showGreeting() {
-      const hour = new Date().getHours();
-      let greeting = "";
-      if (hour >= 5 && hour < 12) greeting = currentLang === "ar" ? "☀️ صباح الخير" : "Good Morning ☀️";
-      else if (hour >= 12 && hour < 18) greeting = currentLang === "ar" ? "🌞 مساء الخير" : "Good Afternoon 🌞";
-      else greeting = currentLang === "ar" ? "🌙 مساء الخير" : "Good Evening 🌙";
-      const greetElem = document.getElementById("greeting");
-      if (greetElem) greetElem.textContent = greeting;
-    }
+      document.getElementById("submitComment").addEventListener("click", () => {
+        const comment = document.getElementById("commentBox").value.trim();
+        if (comment) {
+          const div = document.createElement("div");
+          div.textContent = comment;
+          document.getElementById("commentsList").appendChild(div);
+          document.getElementById("commentBox").value = "";
+        }
+      });
+      break;
+  }
+}
 
-    window.addEventListener("hashchange", () => {
-      loadPage(window.location.hash);
-    });
+function showGreeting() {
+  const hour = new Date().getHours();
+  let greeting = "";
+  if (hour >= 5 && hour < 12) greeting = currentLang === "ar" ? "☀️ صباح الخير" : "Good Morning ☀️";
+  else if (hour >= 12 && hour < 18) greeting = currentLang === "ar" ? "🌞 مساء الخير" : "Good Afternoon 🌞";
+  else greeting = currentLang === "ar" ? "🌙 مساء الخير" : "Good Evening 🌙";
+  const greetElem = document.getElementById("greeting");
+  if (greetElem) greetElem.textContent = greeting;
+}
 
-    document.querySelector(".hamburger").addEventListener("click", () => {
-      document.querySelector(".nav-links").classList.toggle("active");
-    });
+window.addEventListener("hashchange", () => {
+  loadPage(window.location.hash);
+});
 
-    // init
-    applyLanguage();
-    showGreeting();
+document.querySelector(".hamburger").addEventListener("click", () => {
+  document.querySelector(".nav-links").classList.toggle("active");
+});
+
+applyLanguage();
+showGreeting();
+
   </script>
 </body>
 </html>
-
-
