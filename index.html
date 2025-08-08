@@ -201,9 +201,24 @@
         case "#contact":
           document.getElementById("page-content").innerHTML = langData.contactContent;
           break;
-        case "#comments":
-          document.getElementById("page-content").innerHTML = langData.commentsContent + `<textarea rows="4" cols="40" placeholder="اكتب تعليقك"></textarea><br><button>ارسال</button>`;
-          break;
+case "#comments":
+  document.getElementById("page-content").innerHTML = 
+    langData.commentsContent + 
+    `<textarea id="commentBox" rows="4" cols="40" placeholder="${currentLang === 'ar' ? 'اكتب تعليقك' : 'Write your comment'}"></textarea><br>
+     <button id="submitComment">${currentLang === 'ar' ? 'ارسال' : 'Submit'}</button>
+     <div id="commentsList"></div>`;
+  
+  document.getElementById("submitComment").addEventListener("click", () => {
+    const comment = document.getElementById("commentBox").value.trim();
+    if (comment) {
+      const div = document.createElement("div");
+      div.textContent = comment;
+      document.getElementById("commentsList").appendChild(div);
+      document.getElementById("commentBox").value = "";
+    }
+  });
+  break;
+          
       }
     }
 
@@ -231,3 +246,4 @@
   </script>
 </body>
 </html>
+
