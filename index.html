@@ -202,15 +202,40 @@
             `<textarea id="commentBox" rows="4" cols="40" placeholder="${currentLang === 'ar' ? 'اكتب تعليقك' : 'Write your comment'}"></textarea><br><button id="submitComment">${currentLang === 'ar' ? 'ارسال' : 'Submit'}</button>
          <div id="commentsList"></div>`;
 
-      document.getElementById("submitComment").addEventListener("click", () => {
-        const comment = document.getElementById("commentBox").value.trim();
-        if (comment) {
-          const div = document.createElement("div");
-          div.textContent = comment;
-          document.getElementById("commentsList").appendChild(div);
-          document.getElementById("commentBox").value = "";
-        }
-      });
+         // دالة لتحميل التعليقات من localStorage
+function loadComments() {
+  const savedComments = JSON.parse(localStorage.getItem("commentsList") || "[]");
+  const commentsList = document.getElementById("commentsList");
+  savedComments.forEach(comment => {
+    const div = document.createElement("div");
+    div.textContent = comment;
+    commentsList.appendChild(div);
+  });
+}
+
+document.getElementById("submitComment").addEventListener("click", () => {
+  const comment = document.getElementById("commentBox").value.trim();
+  if (comment) {
+    const commentsList = document.getElementById("commentsList");
+
+    // عرض التعليق
+    const div = document.createElement("div");
+    div.textContent = comment;
+    commentsList.appendChild(div);
+
+    // حفظ التعليق في localStorage
+    const savedComments = JSON.parse(localStorage.getItem("commentsList") || "[]");
+    savedComments.push(comment);
+    localStorage.setItem("commentsList", JSON.stringify(savedComments));
+
+    // تفريغ صندوق التعليق
+    document.getElementById("commentBox").value = "";
+  }
+});
+
+// تحميل التعليقات عند عرض صفحة التعليقات
+loadComments(); 
+      
       break;
   }
 }
@@ -239,3 +264,4 @@ showGreeting();
   </script>
 </body>
 </html>
+
