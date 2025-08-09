@@ -109,12 +109,6 @@
     }
     .comment-card .meta{font-size:13px;color:#666;margin-bottom:6px}
     .comment-card .text{white-space:pre-wrap}
-    .comment-card button.delete{
-      position:absolute;
-      left:10px; /* left because RTL */
-      top:10px;
-      background:#e74c3c;color:white;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;
-    }
 
     footer{
       text-align:center;
@@ -162,320 +156,309 @@
     <!-- footer text injected -->
   </footer>
 
-<script>
-/* ---------- data & translations ---------- */
-const translations = {
-  ar: {
-    home: "الرئيسية",
-    about: "من نحن",
-    products: "المنتجات",
-    contact: "تواصل معنا",
-    comments: "تعليقات العملاء",
-    homeTitle: "مرحبا بكم في متجر ELR الالكتروني",
-    slogan: "خدمات إلكترونية ورقمية بدقة وسرعة",
-    aboutContent: "متجر الكتروني متكامل للخدمات الالكترونية والرقمية بدقة و سرعة عالية في المعاملة.",
-    productsContent: `
-      <h3>1- العملات الرقمية</h3>
-      <ul>
-        <li>شراء العملات الرقمية</li>
-        <li>بيع العملات الرقمية</li>
-        <li>التعامل بالعملة الرقمية USDT في البيع والشراء</li>
-      </ul>
-      <h3>2- خدمات التلجرام</h3>
-      <ul>
-        <li>توثيق التلجرام</li>
-        <li>شراء نجوم التلجرام</li>
-      </ul>
-    `,
-    contactContent: `
-      <p>رابط التليجرام: <a href="https://t.me/ElnourMohammedAhmed" target="_blank">Telegram.me/ElnourMohammedAhmed</a></p>
-      <p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed" target="_blank">Facebook.me/ElnourMohammedAhmed</a></p>
-      <p>الخط الساخن: +249111118226</p>
-    `,
-    commentsTitle: "تعليقات العملاء",
-    placeholderName: "الاسم (اختياري)",
-    placeholderComment: "اكتب تعليقك هنا",
-    submitBtn: "إرسال",
-    guest: "زائر",
-    deleteBtn: "حذف",
-    footerText: "جميع الحقوق محفوظة © ELR 2025",
-    greetingMorning: "☀️ صباح الخير",
-    greetingAfternoon: "🌞 مساء الخير",
-    greetingEvening: "🌙 مساء الخير"
-  },
-  en: {
-    home: "Home",
-    about: "About Us",
-    products: "Products",
-    contact: "Contact Us",
-    comments: "Customer Comments",
-    homeTitle: "Welcome to ELR E-Store",
-    slogan: "Electronic & digital services with speed and accuracy",
-    aboutContent: "A complete online store for electronic and digital services with high accuracy and speed.",
-    productsContent: `
-      <h3>1- Digital Currencies</h3>
-      <ul>
-        <li>Buy digital currencies</li>
-        <li>Sell digital currencies</li>
-        <li>Trade with USDT currency</li>
-      </ul>
-      <h3>2- Telegram Services</h3>
-      <ul>
-        <li>Telegram verification</li>
-        <li>Buy Telegram stars</li>
-      </ul>
-    `,
-    contactContent: `
-      <p>Telegram: <a href="https://t.me/ElnourMohammedAhmed" target="_blank">Telegram.me/ElnourMohammedAhmed</a></p>
-      <p>Facebook: <a href="https://facebook.me/ElnourMohammedAhmed" target="_blank">Facebook.me/ElnourMohammedAhmed</a></p>
-      <p>Hotline: +249111118226</p>
-    `,
-    commentsTitle: "Customer Comments",
-    placeholderName: "Name (optional)",
-    placeholderComment: "Write your comment here",
-    submitBtn: "Submit",
-    guest: "Guest",
-    deleteBtn: "Delete",
-    footerText: "All rights reserved © ELR 2025",
-    greetingMorning: "Good Morning ☀️",
-    greetingAfternoon: "Good Afternoon 🌞",
-    greetingEvening: "Good Evening 🌙"
-  }
-};
+  <!-- Firebase SDKs (compatibility version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-let currentLang = 'ar'; // default
-const STORAGE_KEY = 'elrComments';
-
-/* ---------- helpers ---------- */
-function t(key){ return translations[currentLang][key]; }
-
-function formatDateForDisplay(isoString){
-  try{
-    const dt = new Date(isoString);
-    const locale = currentLang === 'ar' ? 'ar-EG' : 'en-US';
-    return dt.toLocaleString(locale);
-  }catch(e){
-    return isoString;
-  }
-}
-
-function getGreeting(){
-  const h = new Date().getHours();
-  if(h >=5 && h < 12) return t('greetingMorning');
-  if(h >=12 && h <18) return t('greetingAfternoon');
-  return t('greetingEvening');
-}
-
-/* ---------- render sections ---------- */
-function renderHeaderText(){
-  // nav labels
-  document.querySelectorAll('#navLinks a').forEach(a=>{
-    const key = a.dataset.key;
-    a.textContent = translations[currentLang][key] || a.textContent;
-  });
-  // lang button text
-  const btn = document.getElementById('langBtn');
-  btn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
-  // footer
-  document.getElementById('footer').textContent = translations[currentLang].footerText;
-}
-
-function loadPageFromHash(){
-  const hash = location.hash || '#home';
-  loadPage(hash);
-}
-
-function loadPage(hash){
-  const main = document.getElementById('mainContent');
-  if(!hash.startsWith('#')) hash = '#home';
-  switch(hash){
-    case '#home':
-      main.innerHTML = `
-        <section id="home">
-          <h1>${t('homeTitle')}</h1>
-          <p class="greeting">${getGreeting()}</p>
-          <p>${t('slogan')}</p>
-          <img class="logo-img" src="logo.png" alt="ELR Logo" onerror="this.style.display='none'">
-        </section>
-      `;
-      break;
-
-    case '#about':
-      main.innerHTML = `
-        <section id="about">
-          <h2>${t('about')}</h2>
-          <p>${t('aboutContent')}</p>
-        </section>
-      `;
-      break;
-
-    case '#products':
-      main.innerHTML = `
-        <section id="products">
-          <h2>${t('products')}</h2>
-          ${t('productsContent')}
-        </section>
-      `;
-      break;
-
-    case '#contact':
-      main.innerHTML = `
-        <section id="contact">
-          <h2>${t('contact')}</h2>
-          ${t('contactContent')}
-        </section>
-      `;
-      break;
-
-    case '#comments':
-      main.innerHTML = `
-        <section id="commentsSection">
-          <h2>${t('commentsTitle')}</h2>
-          <div class="comment-form">
-            <input id="nameInput" type="text" placeholder="${t('placeholderName')}" />
-            <textarea id="commentInput" rows="4" placeholder="${t('placeholderComment')}"></textarea>
-            <button id="submitComment">${t('submitBtn')}</button>
-          </div>
-          <div class="comments-list" id="commentsList"></div>
-        </section>
-      `;
-      attachCommentsHandlers();
-      renderComments();
-      break;
-
-    default:
-      location.hash = '#home';
-      return;
-  }
-  renderHeaderText();
-}
-
-/* ---------- hamburger ---------- */
-document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
-  const nav = document.getElementById('navLinks');
-  nav.classList.toggle('active');
-});
-  // اخفاء القائمة عند الضغط على أي رابط داخل القائمة في الوضع المتنقل
-document.querySelectorAll('#navLinks a').forEach(link => {
-  link.addEventListener('click', () => {
-    const nav = document.getElementById('navLinks');
-    // فقط إذا القائمة مفتوحة (active) يتم اغلاقها
-    if(nav.classList.contains('active')){
-      nav.classList.remove('active');
-    }
-  });
-});
-
-/* ---------- language toggle ---------- */
-document.getElementById('langBtn').addEventListener('click', ()=>{
-  currentLang = currentLang === 'ar' ? 'en' : 'ar';
-  // adjust direction and language attribute
-  document.documentElement.lang = currentLang === 'ar' ? 'ar' : 'en';
-  document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-  // reload current page and re-render texts
-  loadPage(location.hash || '#home');
-});
-
-/* ---------- comments logic ---------- */
-function getStoredComments(){
-  try{
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  }catch(e){
-    return [];
-  }
-}
-
-function saveStoredComments(arr){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-}
-
-function attachCommentsHandlers(){
-  const submitBtn = document.getElementById('submitComment');
-  const nameInput = document.getElementById('nameInput');
-  const commentInput = document.getElementById('commentInput');
-
-  submitBtn.addEventListener('click', ()=>{
-    const text = commentInput.value.trim();
-    if(!text) return alert(currentLang === 'ar' ? 'الرجاء كتابة تعليق' : 'Please write a comment');
-
-    const nameVal = nameInput.value.trim();
-    const entry = {
-      name: nameVal, // keep empty if not provided
-      text,
-      ts: new Date().toISOString()
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDn9kQklHqskJZLOyb1tugkm5gfv79Ag9w",
+      authDomain: "elr-comment.firebaseapp.com",
+      databaseURL: "https://elr-comment-default-rtdb.firebaseio.com",
+      projectId: "elr-comment",
+      storageBucket: "elr-comment.firebasestorage.app",
+      messagingSenderId: "613467240959",
+      appId: "1:613467240959:web:1ab0abe0686913ca87cfca",
+      measurementId: "G-MTQWBQ462D"
     };
-    const arr = getStoredComments();
-    arr.push(entry);
-    saveStoredComments(arr);
+    firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const db = firebase.database();
+  </script>
 
-    // clear inputs
-    nameInput.value = '';
-    commentInput.value = '';
-    renderComments();
-  });
-}
+  <script>
+    /* ---------- data & translations ---------- */
+    const translations = {
+      ar: {
+        home: "الرئيسية",
+        about: "من نحن",
+        products: "المنتجات",
+        contact: "تواصل معنا",
+        comments: "تعليقات العملاء",
+        homeTitle: "مرحبا بكم في متجر ELR الالكتروني",
+        slogan: "خدمات إلكترونية ورقمية بدقة وسرعة",
+        aboutContent: "متجر الكتروني متكامل للخدمات الالكترونية والرقمية بدقة و سرعة عالية في المعاملة.",
+        productsContent: `
+          <h3>1- العملات الرقمية</h3>
+          <ul>
+            <li>شراء العملات الرقمية</li>
+            <li>بيع العملات الرقمية</li>
+            <li>التعامل بالعملة الرقمية USDT في البيع والشراء</li>
+          </ul>
+          <h3>2- خدمات التلجرام</h3>
+          <ul>
+            <li>توثيق التلجرام</li>
+            <li>شراء نجوم التلجرام</li>
+          </ul>
+        `,
+        contactContent: `
+          <p>رابط التليجرام: <a href="https://t.me/ElnourMohammedAhmed" target="_blank">Telegram.me/ElnourMohammedAhmed</a></p>
+          <p>رابط الفيسبوك: <a href="https://facebook.me/ElnourMohammedAhmed" target="_blank">Facebook.me/ElnourMohammedAhmed</a></p>
+          <p>الخط الساخن: +249111118226</p>
+        `,
+        commentsTitle: "تعليقات العملاء",
+        placeholderName: "الاسم (اختياري)",
+        placeholderComment: "اكتب تعليقك هنا",
+        submitBtn: "إرسال",
+        guest: "زائر",
+        footerText: "جميع الحقوق محفوظة © ELR 2025",
+        greetingMorning: "☀️ صباح الخير",
+        greetingAfternoon: "🌞 مساء الخير",
+        greetingEvening: "🌙 مساء الخير"
+      },
+      en: {
+        home: "Home",
+        about: "About Us",
+        products: "Products",
+        contact: "Contact Us",
+        comments: "Customer Comments",
+        homeTitle: "Welcome to ELR E-Store",
+        slogan: "Electronic & digital services with speed and accuracy",
+        aboutContent: "A complete online store for electronic and digital services with high accuracy and speed.",
+        productsContent: `
+          <h3>1- Digital Currencies</h3>
+          <ul>
+            <li>Buy digital currencies</li>
+            <li>Sell digital currencies</li>
+            <li>Trade with USDT currency</li>
+          </ul>
+          <h3>2- Telegram Services</h3>
+          <ul>
+            <li>Telegram verification</li>
+            <li>Buy Telegram stars</li>
+          </ul>
+        `,
+        contactContent: `
+          <p>Telegram: <a href="https://t.me/ElnourMohammedAhmed" target="_blank">Telegram.me/ElnourMohammedAhmed</a></p>
+          <p>Facebook: <a href="https://facebook.me/ElnourMohammedAhmed" target="_blank">Facebook.me/ElnourMohammedAhmed</a></p>
+          <p>Hotline: +249111118226</p>
+        `,
+        commentsTitle: "Customer Comments",
+        placeholderName: "Name (optional)",
+        placeholderComment: "Write your comment here",
+        submitBtn: "Submit",
+        guest: "Guest",
+        footerText: "All rights reserved © ELR 2025",
+        greetingMorning: "Good Morning ☀️",
+        greetingAfternoon: "Good Afternoon 🌞",
+        greetingEvening: "Good Evening 🌙"
+      }
+    };
 
-function renderComments(){
-  const list = document.getElementById('commentsList');
-  if(!list) return;
-  list.innerHTML = '';
-  const arr = getStoredComments();
-  if(arr.length === 0){
-    list.innerHTML = `<p style="color:#666">${ currentLang==='ar' ? 'لا توجد تعليقات بعد' : 'No comments yet' }</p>`;
-    return;
-  }
-  arr.forEach((c, idx)=>{
-    const card = document.createElement('div');
-    card.className = 'comment-card';
-    const displayName = c.name && c.name.length ? c.name : t('guest');
-    const dateText = formatDateForDisplay(c.ts);
-    card.innerHTML = `
-      <div class="meta"><strong>${escapeHtml(displayName)}</strong> • <span>${escapeHtml(dateText)}</span></div>
-      <div class="text">${escapeHtml(c.text)}</div>
-      <button class="delete" data-idx="${idx}">${t('deleteBtn')}</button>
-    `;
-    list.appendChild(card);
-  });
+    let currentLang = 'ar'; // default
 
-  // attach delete handlers
-  list.querySelectorAll('button.delete').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      const i = Number(btn.dataset.idx);
-      deleteComment(i);
+    /* ---------- helpers ---------- */
+    function t(key){ return translations[currentLang][key]; }
+
+    function formatDateForDisplay(isoString){
+      try{
+        const dt = new Date(isoString);
+        const locale = currentLang === 'ar' ? 'ar-EG' : 'en-US';
+        return dt.toLocaleString(locale);
+      }catch(e){
+        return isoString;
+      }
+    }
+
+    function getGreeting(){
+      const h = new Date().getHours();
+      if(h >=5 && h < 12) return t('greetingMorning');
+      if(h >=12 && h <18) return t('greetingAfternoon');
+      return t('greetingEvening');
+    }
+
+    /* ---------- render sections ---------- */
+    function renderHeaderText(){
+      document.querySelectorAll('#navLinks a').forEach(a=>{
+        const key = a.dataset.key;
+        a.textContent = translations[currentLang][key] || a.textContent;
+      });
+      const btn = document.getElementById('langBtn');
+      btn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
+      document.getElementById('footer').textContent = translations[currentLang].footerText;
+    }
+
+    function loadPageFromHash(){
+      const hash = location.hash || '#home';
+      loadPage(hash);
+    }
+
+    function loadPage(hash){
+      const main = document.getElementById('mainContent');
+      if(!hash.startsWith('#')) hash = '#home';
+      switch(hash){
+        case '#home':
+          main.innerHTML = `
+            <section id="home">
+              <h1>${t('homeTitle')}</h1>
+              <p class="greeting">${getGreeting()}</p>
+              <p>${t('slogan')}</p>
+              <img class="logo-img" src="logo.png" alt="ELR Logo" onerror="this.style.display='none'">
+            </section>
+          `;
+          break;
+
+        case '#about':
+          main.innerHTML = `
+            <section id="about">
+              <h2>${t('about')}</h2>
+              <p>${t('aboutContent')}</p>
+            </section>
+          `;
+          break;
+
+        case '#products':
+          main.innerHTML = `
+            <section id="products">
+              <h2>${t('products')}</h2>
+              ${t('productsContent')}
+            </section>
+          `;
+          break;
+
+        case '#contact':
+          main.innerHTML = `
+            <section id="contact">
+              <h2>${t('contact')}</h2>
+              ${t('contactContent')}
+            </section>
+          `;
+          break;
+
+        case '#comments':
+          main.innerHTML = `
+            <section id="commentsSection">
+              <h2>${t('commentsTitle')}</h2>
+              <div class="comment-form">
+                <input id="nameInput" type="text" placeholder="${t('placeholderName')}" />
+                <textarea id="commentInput" rows="4" placeholder="${t('placeholderComment')}"></textarea>
+                <button id="submitComment">${t('submitBtn')}</button>
+              </div>
+              <div class="comments-list" id="commentsList"></div>
+            </section>
+          `;
+          attachCommentsHandlers();
+          renderCommentsFirebase();
+          break;
+
+        default:
+          location.hash = '#home';
+          return;
+      }
+      renderHeaderText();
+    }
+
+    /* ---------- hamburger ---------- */
+    document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
     });
-  });
-}
 
-function deleteComment(index){
-  const arr = getStoredComments();
-  if(index <0 || index >= arr.length) return;
-  arr.splice(index,1);
-  saveStoredComments(arr);
-  renderComments();
-}
+    // اغلاق القائمة عند اختيار رابط منها (في الشاشات الصغيرة)
+    document.querySelectorAll('#navLinks a').forEach(link => {
+      link.addEventListener('click', () => {
+        const nav = document.getElementById('navLinks');
+        if(nav.classList.contains('active')){
+          nav.classList.remove('active');
+        }
+      });
+    });
 
-/* ---------- tiny helper to avoid HTML injection when rendering user text ---------- */
-function escapeHtml(str){
-  if(!str) return '';
-  return String(str)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-}
+    /* ---------- language toggle ---------- */
+    document.getElementById('langBtn').addEventListener('click', ()=>{
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = currentLang === 'ar' ? 'ar' : 'en';
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      loadPage(location.hash || '#home');
+    });
 
-/* ---------- navigation handling ---------- */
-window.addEventListener('hashchange', ()=> loadPage(location.hash || '#home'));
+    /* ---------- comments logic using Firebase ---------- */
 
-/* ---------- initial load ---------- */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // initial nav labels (in case)
-  renderHeaderText();
-  // load page
-  loadPage(location.hash || '#home');
-});
-</script>
-</body>
-</html>
+    function saveCommentFirebase(comment){
+      const commentsRef = db.ref('comments');
+      commentsRef.push(comment);
+    }
 
+    function loadCommentsFirebase(callback){
+      const commentsRef = db.ref('comments');
+      commentsRef.on('value', snapshot => {
+        const data = snapshot.val() || {};
+        const commentsArray = Object.values(data);
+        callback(commentsArray);
+      });
+    }
+
+    function attachCommentsHandlers(){
+      const submitBtn = document.getElementById('submitComment');
+      const nameInput = document.getElementById('nameInput');
+      const commentInput = document.getElementById('commentInput');
+
+      submitBtn.addEventListener('click', ()=>{
+        const text = commentInput.value.trim();
+        if(!text) return alert(currentLang === 'ar' ? 'الرجاء كتابة تعليق' : 'Please write a comment');
+
+        const nameVal = nameInput.value.trim() || '';
+        const entry = {
+          name: nameVal,
+          text,
+          ts: new Date().toISOString()
+        };
+
+        saveCommentFirebase(entry);
+
+        nameInput.value = '';
+        commentInput.value = '';
+      });
+    }
+
+    function renderCommentsFirebase(){
+      loadCommentsFirebase((commentsArray) => {
+        const list = document.getElementById('commentsList');
+        if(!list) return;
+        list.innerHTML = '';
+        if(commentsArray.length === 0){
+          list.innerHTML = `<p style="color:#666">${ currentLang==='ar' ? 'لا توجد تعليقات بعد' : 'No comments yet' }</p>`;
+          return;
+        }
+        commentsArray.forEach(c => {
+          const card = document.createElement('div');
+          card.className = 'comment-card';
+          const displayName = c.name && c.name.length ? c.name : translations[currentLang].guest;
+          const dateText = formatDateForDisplay(c.ts);
+          card.innerHTML = `
+            <div class="meta"><strong>${escapeHtml(displayName)}</strong> • <span>${escapeHtml(dateText)}</span></div>
+            <div class="text">${escapeHtml(c.text)}</div>
+          `;
+          list.appendChild(card);
+        });
+      });
+    }
+
+    function escapeHtml(str){
+      if(!str) return '';
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#039;');
+    }
+
+    window.addEventListener('hashchange', ()=> loadPage(location.hash || '#home'));
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderHeaderText();
+      loadPage(location.hash || '#home');
+    });
+  </script
