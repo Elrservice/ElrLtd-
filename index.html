@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>متجر ELR الإلكتروني</title>
+  <title>متجر ELر الإلكتروني</title>
   <style>
     :root{
       --brown:#4b2e2e;
@@ -255,7 +255,7 @@
       }
     };
 
-    let currentLang = 'ar'; // default
+    let currentLang = 'ar';
 
     function t(key){ return translations[currentLang][key]; }
 
@@ -284,11 +284,6 @@
       const btn = document.getElementById('langBtn');
       btn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
       document.getElementById('footer').textContent = translations[currentLang].footerText;
-    }
-
-    function loadPageFromHash(){
-      const hash = location.hash || '#home';
-      loadPage(hash);
     }
 
     function loadPage(hash){
@@ -356,24 +351,40 @@
       renderHeaderText();
     }
 
-    document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
-      const nav = document.getElementById('navLinks');
-      nav.classList.toggle('active');
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const navLinks = document.getElementById('navLinks');
+      const langBtn = document.getElementById('langBtn');
 
-    document.querySelectorAll('#navLinks a').forEach(link => {
-      link.addEventListener('click', () => {
-        const nav = document.getElementById('navLinks');
-        if(nav.classList.contains('active')){
-          nav.classList.remove('active');
-        }
+      hamburgerBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
       });
-    });
 
-    document.getElementById('langBtn').addEventListener('click', ()=>{
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      document.documentElement.lang = currentLang === 'ar' ? 'ar' : 'en';
-      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if(navLinks.classList.contains('active')){
+            navLinks.classList.remove('active');
+          }
+        });
+      });
+
+      langBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        langBtn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
+
+        // تحديث نصوص الروابط
+        navLinks.querySelectorAll('a').forEach(a => {
+          const key = a.dataset.key;
+          a.textContent = translations[currentLang][key];
+        });
+
+        // إعادة تحميل المحتوى حسب اللغة والصفحة الحالية
+        loadPage(location.hash || '#home');
+      });
+
+      // تحميل الصفحة الحالية عند بدء العرض
       loadPage(location.hash || '#home');
     });
 
@@ -448,7 +459,8 @@
         .replace(/'/g,'&#039;');
     }
 
-    window.addEventListener('hashchange', ()=> loadPage(location.hash || '#home'));
+    window.addEventListener('hashchange', () => loadPage(location.hash || '#home'));
 
-    document.addEventListener('DOMContentLoaded', ()=>{
-      renderHeader
+  </script>
+</body>
+</html>
