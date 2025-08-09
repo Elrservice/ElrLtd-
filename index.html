@@ -37,7 +37,7 @@
       background:none;
       border:none;
       color:white;
-      margin-left:auto; /* make left in RTL */
+      margin-left:auto;
     }
     .logo{
       font-weight:700;
@@ -178,7 +178,6 @@
   </script>
 
   <script>
-    /* ---------- data & translations ---------- */
     const translations = {
       ar: {
         home: "الرئيسية",
@@ -258,7 +257,6 @@
 
     let currentLang = 'ar'; // default
 
-    /* ---------- helpers ---------- */
     function t(key){ return translations[currentLang][key]; }
 
     function formatDateForDisplay(isoString){
@@ -278,7 +276,6 @@
       return t('greetingEvening');
     }
 
-    /* ---------- render sections ---------- */
     function renderHeaderText(){
       document.querySelectorAll('#navLinks a').forEach(a=>{
         const key = a.dataset.key;
@@ -359,13 +356,11 @@
       renderHeaderText();
     }
 
-    /* ---------- hamburger ---------- */
     document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
       const nav = document.getElementById('navLinks');
       nav.classList.toggle('active');
     });
 
-    // اغلاق القائمة عند اختيار رابط منها (في الشاشات الصغيرة)
     document.querySelectorAll('#navLinks a').forEach(link => {
       link.addEventListener('click', () => {
         const nav = document.getElementById('navLinks');
@@ -375,7 +370,6 @@
       });
     });
 
-    /* ---------- language toggle ---------- */
     document.getElementById('langBtn').addEventListener('click', ()=>{
       currentLang = currentLang === 'ar' ? 'en' : 'ar';
       document.documentElement.lang = currentLang === 'ar' ? 'ar' : 'en';
@@ -383,8 +377,7 @@
       loadPage(location.hash || '#home');
     });
 
-    /* ---------- comments logic using Firebase ---------- */
-
+    // Firebase comments functions
     function saveCommentFirebase(comment){
       const commentsRef = db.ref('comments');
       commentsRef.push(comment);
@@ -458,7 +451,4 @@
     window.addEventListener('hashchange', ()=> loadPage(location.hash || '#home'));
 
     document.addEventListener('DOMContentLoaded', ()=>{
-      renderHeaderText();
-      loadPage(location.hash || '#home');
-    });
-  </script
+      renderHeader
