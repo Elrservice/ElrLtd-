@@ -355,6 +355,16 @@ document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
   const nav = document.getElementById('navLinks');
   nav.classList.toggle('active');
 });
+  // اخفاء القائمة عند الضغط على أي رابط داخل القائمة في الوضع المتنقل
+document.querySelectorAll('#navLinks a').forEach(link => {
+  link.addEventListener('click', () => {
+    const nav = document.getElementById('navLinks');
+    // فقط إذا القائمة مفتوحة (active) يتم اغلاقها
+    if(nav.classList.contains('active')){
+      nav.classList.remove('active');
+    }
+  });
+});
 
 /* ---------- language toggle ---------- */
 document.getElementById('langBtn').addEventListener('click', ()=>{
@@ -468,3 +478,4 @@ document.addEventListener('DOMContentLoaded', ()=>{
 </script>
 </body>
 </html>
+
