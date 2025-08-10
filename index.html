@@ -68,7 +68,6 @@
       border-radius:6px;
       cursor:pointer;
     }
-
     main{max-width:1000px;margin:18px auto;padding:0 12px}
     section{
       background:var(--card);
@@ -80,7 +79,6 @@
     h1,h2{margin:0 0 10px 0;color:var(--brown)}
     .greeting{margin:8px 0;color:var(--accent)}
     img.logo-img{max-width:180px;display:block;margin:8px 0}
-
     /* comments */
     .comment-form input,.comment-form textarea{
       width:100%;
@@ -109,7 +107,6 @@
     }
     .comment-card .meta{font-size:13px;color:#666;margin-bottom:6px}
     .comment-card .text{white-space:pre-wrap}
-
     footer{
       text-align:center;
       background:var(--brown);
@@ -117,7 +114,6 @@
       padding:12px;
       margin-top:18px;
     }
-
     /* responsive nav */
     @media (max-width:768px){
       nav.nav-links{display:none;position:absolute;left:0;right:0;top:56px;background:var(--white);flex-direction:column;padding:8px}
@@ -135,7 +131,6 @@
 <body>
   <header>
     <div class="logo">ELR</div>
-
     <nav class="nav-links" id="navLinks">
       <a href="#home" data-key="home">الرئيسية</a>
       <a href="#about" data-key="about">من نحن</a>
@@ -143,39 +138,31 @@
       <a href="#contact" data-key="contact">تواصل معنا</a>
       <a href="#comments" data-key="comments">تعليقات العملاء</a>
     </nav>
-
     <button class="hamburger" id="hamburgerBtn" aria-label="menu">☰</button>
     <button class="lang-btn" id="langBtn">English</button>
   </header>
-
-  <main id="mainContent">
-    <!-- content injected by JS -->
-  </main>
-
-  <footer id="footer">
-    <!-- footer text injected -->
-  </footer>
-
-  <!-- Firebase SDKs (compatibility version) -->
+  <main id="mainContent"></main>
+  <footer id="footer"></footer>
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
   <script>
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDn9kQklHqskJZLOyb1tugkm5gfv79Ag9w",
-  authDomain: "elr-comment.firebaseapp.com",
-  databaseURL: "https://elr-comment-default-rtdb.firebaseio.com",
-  projectId: "elr-comment",
-  storageBucket: "elr-comment.firebasestorage.app",
-  messagingSenderId: "613467240959",
-  appId: "1:613467240959:web:1ab0abe0686913ca87cfca",
-  measurementId: "G-MTQWBQ462D"
-};
-  </script>
-
-  <script>
+    // تهيئة Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDn9kQklHqskJZLOyb1tugkm5gfv79Ag9w",
+      authDomain: "elr-comment.firebaseapp.com",
+      databaseURL: "https://elr-comment-default-rtdb.firebaseio.com",
+      projectId: "elr-comment",
+      storageBucket: "elr-comment.firebasestorage.app",
+      messagingSenderId: "613467240959",
+      appId: "1:613467240959:web:1ab0abe0686913ca87cfca",
+      measurementId: "G-MTQWBQ462D"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const db = firebase.database();
+    // الترجمات
     const translations = {
       ar: {
         home: "الرئيسية",
@@ -252,11 +239,10 @@ const firebaseConfig = {
         greetingEvening: "Good Evening 🌙"
       }
     };
-
     let currentLang = 'ar';
-
+    // دالة الترجمة
     function t(key){ return translations[currentLang][key]; }
-
+    // تنسيق التاريخ
     function formatDateForDisplay(isoString){
       try{
         const dt = new Date(isoString);
@@ -266,14 +252,14 @@ const firebaseConfig = {
         return isoString;
       }
     }
-
+    // تحية حسب الوقت
     function getGreeting(){
       const h = new Date().getHours();
       if(h >=5 && h < 12) return t('greetingMorning');
       if(h >=12 && h <18) return t('greetingAfternoon');
       return t('greetingEvening');
     }
-
+    // تحديث نص التبويبات والزر والFooter
     function renderHeaderText(){
       document.querySelectorAll('#navLinks a').forEach(a=>{
         const key = a.dataset.key;
@@ -283,7 +269,12 @@ const firebaseConfig = {
       btn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
       document.getElementById('footer').textContent = translations[currentLang].footerText;
     }
-
+    // تحميل الصفحة حسب الهاش
+    function loadPageFromHash(){
+      const hash = location.hash || '#home';
+      loadPage(hash);
+    }
+    // تحميل المحتوى حسب الصفحة
     function loadPage(hash){
       const main = document.getElementById('mainContent');
       if(!hash.startsWith('#')) hash = '#home';
@@ -298,7 +289,6 @@ const firebaseConfig = {
             </section>
           `;
           break;
-
         case '#about':
           main.innerHTML = `
             <section id="about">
@@ -307,7 +297,6 @@ const firebaseConfig = {
             </section>
           `;
           break;
-
         case '#products':
           main.innerHTML = `
             <section id="products">
@@ -316,7 +305,6 @@ const firebaseConfig = {
             </section>
           `;
           break;
-
         case '#contact':
           main.innerHTML = `
             <section id="contact">
@@ -325,7 +313,6 @@ const firebaseConfig = {
             </section>
           `;
           break;
-
         case '#comments':
           main.innerHTML = `
             <section id="commentsSection">
@@ -341,57 +328,39 @@ const firebaseConfig = {
           attachCommentsHandlers();
           renderCommentsFirebase();
           break;
-
         default:
           location.hash = '#home';
           return;
       }
       renderHeaderText();
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const hamburgerBtn = document.getElementById('hamburgerBtn');
-      const navLinks = document.getElementById('navLinks');
-      const langBtn = document.getElementById('langBtn');
-
-      hamburgerBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+    // زر القائمة المنسدلة (الهامبرجر)
+    document.getElementById('hamburgerBtn').addEventListener('click', ()=>{
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
+    });
+    // إغلاق القائمة بعد اختيار رابط
+    document.querySelectorAll('#navLinks a').forEach(link => {
+      link.addEventListener('click', () => {
+        const nav = document.getElementById('navLinks');
+        if(nav.classList.contains('active')){
+          nav.classList.remove('active');
+        }
       });
-
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          if(navLinks.classList.contains('active')){
-            navLinks.classList.remove('active');
-          }
-        });
-      });
-
-      langBtn.addEventListener('click', () => {
-        currentLang = currentLang === 'ar' ? 'en' : 'ar';
-        document.documentElement.lang = currentLang;
-        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-        langBtn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
-
-        // تحديث نصوص الروابط
-        navLinks.querySelectorAll('a').forEach(a => {
-          const key = a.dataset.key;
-          a.textContent = translations[currentLang][key];
-        });
-
-        // إعادة تحميل المحتوى حسب اللغة والصفحة الحالية
-        loadPage(location.hash || '#home');
-      });
-
-      // تحميل الصفحة الحالية عند بدء العرض
+    });
+    // زر تغيير اللغة
+    document.getElementById('langBtn').addEventListener('click', ()=>{
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = currentLang === 'ar' ? 'ar' : 'en';
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
       loadPage(location.hash || '#home');
     });
-
-    // Firebase comments functions
+    // حفظ تعليق في Firebase
     function saveCommentFirebase(comment){
       const commentsRef = db.ref('comments');
       commentsRef.push(comment);
     }
-
+    // تحميل التعليقات من Firebase
     function loadCommentsFirebase(callback){
       const commentsRef = db.ref('comments');
       commentsRef.on('value', snapshot => {
@@ -400,30 +369,26 @@ const firebaseConfig = {
         callback(commentsArray);
       });
     }
-
+    // ربط أزرار التعليقات وحفظها
     function attachCommentsHandlers(){
       const submitBtn = document.getElementById('submitComment');
       const nameInput = document.getElementById('nameInput');
       const commentInput = document.getElementById('commentInput');
-
       submitBtn.addEventListener('click', ()=>{
         const text = commentInput.value.trim();
         if(!text) return alert(currentLang === 'ar' ? 'الرجاء كتابة تعليق' : 'Please write a comment');
-
         const nameVal = nameInput.value.trim() || '';
         const entry = {
           name: nameVal,
           text,
           ts: new Date().toISOString()
         };
-
         saveCommentFirebase(entry);
-
         nameInput.value = '';
         commentInput.value = '';
       });
     }
-
+    // عرض التعليقات في الصفحة
     function renderCommentsFirebase(){
       loadCommentsFirebase((commentsArray) => {
         const list = document.getElementById('commentsList');
@@ -446,7 +411,7 @@ const firebaseConfig = {
         });
       });
     }
-
+    // دالة لتجنب مشاكل HTML Injection
     function escapeHtml(str){
       if(!str) return '';
       return String(str)
@@ -456,10 +421,13 @@ const firebaseConfig = {
         .replace(/"/g,'&quot;')
         .replace(/'/g,'&#039;');
     }
-
-    window.addEventListener('hashchange', () => loadPage(location.hash || '#home'));
-
+    // تحديث الصفحة عند تغيير الهاش في الرابط
+    window.addEventListener('hashchange', ()=> loadPage(location.hash || '#home'));
+    // تحميل الصفحة الأولى
+    document.addEventListener('DOMContentLoaded', ()=>{
+      loadPageFromHash();
+      renderHeaderText();
+    });
   </script>
 </body>
 </html>
-
